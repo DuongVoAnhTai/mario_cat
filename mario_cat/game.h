@@ -11,10 +11,13 @@ private:
 	//Player
 	Player* player;
 
+	//BackGr
+	sf::Sprite BackGr;
+	sf::Texture BackGrText;
 	//Private function
 	void initVariables();
 	void initWindow();
-
+	void initBackGr();
 	void initPlayer();
 public:
 	//Constructor
@@ -29,6 +32,8 @@ public:
 	void renderPlayer();
 
 	//Function
+	void followPlayer();
+	void renderBackGr();
 	void pollEvent();
 	void update();
 	void render();

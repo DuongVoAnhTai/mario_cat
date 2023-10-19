@@ -1,4 +1,4 @@
-#include "global.h"
+﻿#include "global.h"
 #include "game.h"
 
 //Private function
@@ -14,16 +14,14 @@ void Game::initWindow() {
 	this->window->setFramerateLimit(144); //gioi han khung hinh thanh 144
 }
 
-void Game::initPlayer() {
 
-	this->player = new Player();
-}
 
 Game::Game() {
 
 	this->initVariables();
 	this->initWindow();
 	this->initPlayer();
+	this->initBackGr();
 }
 
 Game::~Game() {
@@ -38,6 +36,10 @@ const bool Game::running() {
 }
 
 //Player
+void Game::initPlayer() {
+
+	this->player = new Player(0,220);
+}
 void Game::updatePlayer() {
 
 	this->player->update();
@@ -48,7 +50,22 @@ void Game::renderPlayer() {
 	this->player->render(*this->window); //goi ham ve player
 }
 
+//BackGr
+void Game::initBackGr() {
+	if (!this->BackGrText.loadFromFile("PNG_file/background_test.jpg")) {
+		cout << "Back Ground ERROR";
+	}
+	this->BackGr.setTexture(this->BackGrText);
+}
+
+void Game::renderBackGr() {
+	this->window->draw(this->BackGr);
+}
+
 //Function
+void Game::followPlayer() {
+
+}
 void Game::pollEvent() {
 
 	while (this->window->pollEvent(this->ev)) {
@@ -71,10 +88,19 @@ void Game::render() {
 		- tao doi tuong
 		- ve len man hinh
 	*/
-
+	
 	this->window->clear();
 
 	//Render game
+	//Vẽ background nhiều lần để lặp lại nó trên cửa sổ đồ họa
+	for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
+		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
+			BackGr.setPosition(x,0);
+			this->renderBackGr();
+		}
+	}
+	sf::Vector2f position = this->player->position();
+	cout << position.x;
 	this->renderPlayer();
 
 	//Draw

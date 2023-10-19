@@ -25,13 +25,13 @@ private:
 	void initSprite();
 	void initAnimation();
 public:  
-	Player();
+	Player(float x, float y);
 	virtual ~Player();
 
 	//Function
+	sf::Vector2f position();
 	void updateAnimation();
 	void updateMovement();
-
 	void update();
 	void render(sf::RenderTarget& target); //ve 1 anh len man hinh
 };
