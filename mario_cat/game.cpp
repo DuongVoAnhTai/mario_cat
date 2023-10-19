@@ -1,57 +1,82 @@
+#include "global.h"
 #include "game.h"
 
+//Private function
+void Game::initVariables() {
 
-void game::initVariables() {
-	this->window = nullptr;	
+	this->window = nullptr;
 }
 
-void game::initWindow() {
-	this->videoMode.height = 600;
-	this->videoMode.width = 800;
-	this->window = new sf::RenderWindow(this->videoMode, "Cat_mario", sf::Style::Close);
+void Game::initWindow() {
+
+	this->videoMode = sf::VideoMode::getFullscreenModes()[0];
+	this->window = new sf::RenderWindow(this->videoMode, "Cat_mario", sf::Style::Fullscreen);
+	this->window->setFramerateLimit(144); //gioi han khung hinh thanh 144
 }
 
-game::game() {
+void Game::initPlayer() {
+
+	this->player = new Player();
+}
+
+Game::Game() {
+
 	this->initVariables();
 	this->initWindow();
+	this->initPlayer();
 }
 
-game::~game() {
+Game::~Game() {
+
 	delete this->window;
+	delete this->player;
 }
 
-const bool game::running() {
+const bool Game::running() {
+
 	return this->window->isOpen();
 }
 
-void game::pollEvent() {
+//Player
+void Game::updatePlayer() {
+
+	this->player->update();
+}
+
+void Game::renderPlayer() {
+
+	this->player->render(*this->window); //goi ham ve player
+}
+
+//Function
+void Game::pollEvent() {
+
 	while (this->window->pollEvent(this->ev)) {
-		switch (this->ev.type) {
-		case sf::Event::Closed:
+		if (this->ev.type == sf::Event::KeyPressed && this->ev.key.code == sf::Keyboard::Escape) {
 			this->window->close();
-			break;
-		case sf::Event::KeyPressed:
-			if (this->ev.key.code == sf::Keyboard::Escape)
-				this->window->close();
-			break;
 		}
 	}
 }
 
-void game::update() {
+void Game::update() {
+
 	this->pollEvent();
+	this->updatePlayer();
 }
 
-void game::render() {
+void Game::render() {
 
-	/*
-		- xoa cua so
-		- tao doi tong
+	/* quy tac ve hinh anh len man hinh
+		- xoa man hinh
+		- tao doi tuong
 		- ve len man hinh
 	*/
 
-	this->window->clear(sf::Color::Blue);
+	this->window->clear();
 
-	//draw
+	//Render game
+	this->renderPlayer();
+
+	//Draw
 	this->window->display();
 }

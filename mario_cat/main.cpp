@@ -2,7 +2,7 @@
 #include "game.h"
 
 int main() {
-	game game;
+	Game game;
 
 	//game loop
 	while (game.running()) {

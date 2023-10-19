@@ -1,25 +1,34 @@
 #pragma once
-#include"global.cpp"
+#include"player.h"
 
-class game {
+class Game {
 private:
-	//variable
+	//Variable
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
 
-	//private function
+	//Player
+	Player* player;
+
+	//Private function
 	void initVariables();
 	void initWindow();
+
+	void initPlayer();
 public:
 	//Constructor
-	game();
-	virtual ~game();
+	Game();
+	virtual ~Game();
 
-	//access
+	//Access
 	const bool running();
 
-	//function
+	//Player
+	void updatePlayer();
+	void renderPlayer();
+
+	//Function
 	void pollEvent();
 	void update();
 	void render();
