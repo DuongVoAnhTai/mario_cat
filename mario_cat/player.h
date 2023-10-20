@@ -1,6 +1,7 @@
 #pragma once
 
-enum PLAYER_ANIMATION_STATES {
+enum PLAYER_ANIMATION_STATES
+{
 	IDLE = 0, //trang thai player khong tuong tac
 	MOVING_LEFT,
 	MOVING_RIGHT,
@@ -8,10 +9,12 @@ enum PLAYER_ANIMATION_STATES {
 	DIE
 };
 
-class Player {
+class Player
+{
 private:
 	sf::Sprite sprite;
 	sf::Texture textureSheet;
+	sf::Clock animationTimer;
 
 	//Animation
 	short animState;
@@ -24,8 +27,8 @@ private:
 	void initTexture();
 	void initSprite();
 	void initAnimation();
-public:  
-	Player(float x, float y);
+public:
+	Player(float pos_x, float pos_y);
 	virtual ~Player();
 
 	//Function

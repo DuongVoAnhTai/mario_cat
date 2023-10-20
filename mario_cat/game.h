@@ -1,7 +1,9 @@
 #pragma once
 #include"player.h"
+#include"enemy.h"
 
-class Game {
+class Game
+{
 private:
 	//Variable
 	sf::RenderWindow* window;
@@ -14,11 +16,15 @@ private:
 	//BackGr
 	sf::Sprite BackGr;
 	sf::Texture BackGrText;
+	//Enemies
+	Enemy* enemy;
+
 	//Private function
 	void initVariables();
 	void initWindow();
 	void initBackGr();
 	void initPlayer();
+	void initEnemies();
 public:
 	//Constructor
 	Game();
@@ -31,9 +37,14 @@ public:
 	void updatePlayer();
 	void renderPlayer();
 
-	//Function
-	void followPlayer();
+	//Enemies
+	void updatetEnemies();
+	void renderEnemies();
+
+	//Background
 	void renderBackGr();
+
+	//Function
 	void pollEvent();
 	void update();
 	void render();
