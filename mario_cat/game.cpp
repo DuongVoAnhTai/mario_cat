@@ -119,16 +119,16 @@ void Game::render()
 
 	//Render game
 	//Vẽ background nhiều lần để lặp lại nó trên cửa sổ đồ họa
-	for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
+	/*for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
 		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
 			BackGr.setPosition(x, 0);
 			this->renderBackGr();
 		}
-	}
+	}*/
 	sf::Vector2f position = this->player->position();
 	cout << position.x;
-	this->renderPlayer();
-	this->renderEnemies();
+	//this->renderPlayer();
+	//this->renderEnemies();
 
 
 	//Draw
