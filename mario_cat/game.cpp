@@ -78,10 +78,15 @@ void Game::renderEnemies()
 
 //BackGr
 void Game::initBackGr() {
-	if (!this->BackGrText.loadFromFile("PNG_file/background_test.jpg")) {
+	if (!this->BackGrText.loadFromFile("PNG_file/Background.jpg")) {
 		cout << "Back Ground ERROR";
 	}
 	this->BackGr.setTexture(this->BackGrText);
+
+	this->BackGr.setScale(
+		static_cast<float>(this->window->getSize().x) / this->BackGr.getGlobalBounds().width,
+		static_cast<float>(this->window->getSize().y) / this->BackGr.getGlobalBounds().height
+	);
 }
 
 void Game::renderBackGr() {
@@ -119,16 +124,18 @@ void Game::render()
 
 	//Render game
 	//Vẽ background nhiều lần để lặp lại nó trên cửa sổ đồ họa
-	for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
+	/*for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
 		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
 			BackGr.setPosition(x, 0);
 			this->renderBackGr();
 		}
-	}
+	}*/
+	this->renderBackGr();
+
 	sf::Vector2f position = this->player->position();
 	cout << position.x;
-	this->renderPlayer();
-	this->renderEnemies();
+	//this->renderPlayer();
+	//this->renderEnemies();
 
 
 	//Draw
