@@ -19,7 +19,7 @@ void Game::initWindow()
 void Game::initPlayer()
 {
 
-	this->player = new Player(0, 220);
+	this->player = new Player(0, 0);
 }
 
 void Game::initEnemies() {
@@ -73,8 +73,6 @@ void Game::renderEnemies()
 {
 	this->enemy->render(*this->window);
 }
-
-
 
 //BackGr
 void Game::initBackGr() {
@@ -130,11 +128,11 @@ void Game::render()
 			this->renderBackGr();
 		}
 	}*/
-	this->renderBackGr();
+	//this->renderBackGr();
 
 	sf::Vector2f position = this->player->position();
-	cout << position.x;
-	//this->renderPlayer();
+	//cout << position.x;
+	this->renderPlayer();
 	//this->renderEnemies();
 
 
