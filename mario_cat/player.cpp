@@ -25,9 +25,9 @@ void Player::initSprite()
 {
 
 	this->sprite.setTexture(this->textureSheet);
-	this->currentFrame = sf::IntRect(0, 0, 768, 1056);
+	this->currentFrame = sf::IntRect(0, 0, 35.5f, 48.f);
 	this->sprite.setTextureRect(this->currentFrame); //lay frame thu 1 cua hinh anh
-	this->sprite.setScale(sf::Vector2f(0.05f, 0.05f)); //set lai ti le cua hinh anh
+	this->sprite.setScale(sf::Vector2f(1.f, 1.f)); //set lai ti le cua hinh anh
 }
 
 Player::Player(float pos_x, float pos_y)
@@ -79,10 +79,13 @@ void Player::updateAnimation()
 		if (this->animationTimer.getElapsedTime().asSeconds() >= 0.5)
 		{
 			this->currentFrame.top = 0.f;
-			this->currentFrame.left += 768.f;
-			if (this->currentFrame.left >= 1536.f)
+			cout << this->currentFrame.left << " ";
+
+			this->currentFrame.left += 35.5f;
+			if (this->currentFrame.left >= 70.f)
 			{
-				this->currentFrame.left = 0;
+				cout << this->currentFrame.left << " ";
+				this->currentFrame.left = 0.f;
 			}
 			this->animationTimer.restart();
 			this->sprite.setTextureRect(this->currentFrame);
@@ -95,15 +98,15 @@ void Player::updateAnimation()
 		if (this->animationTimer.getElapsedTime().asSeconds() >= 0.5)
 		{
 			this->currentFrame.top = 0.f;
-			this->currentFrame.left += 768.f;
-			if (this->currentFrame.left >= 1536.f)
+			this->currentFrame.left += 35.5f;
+			if (this->currentFrame.left >= 70.f)
 			{
 				this->currentFrame.left = 0;
 			}
 			this->animationTimer.restart();
 			this->sprite.setTextureRect(this->currentFrame);
 		}
-		this->sprite.setScale(0.05f, 0.05f);
+		this->sprite.setScale(1.f, 1.f);
 		this->sprite.setOrigin(0.f, 0.f);
 	}
 
@@ -113,16 +116,16 @@ void Player::updateAnimation()
 		if (this->animationTimer.getElapsedTime().asSeconds() >= 0.5)
 		{
 			this->currentFrame.top = 0.f;
-			this->currentFrame.left += 768.f;
-			if (this->currentFrame.left >= 1536.f)
+			this->currentFrame.left += 35.5f;
+			if (this->currentFrame.left >= 70.f)
 			{
 				this->currentFrame.left = 0;
 			}
 			this->animationTimer.restart();
 			this->sprite.setTextureRect(this->currentFrame);
 		}
-		this->sprite.setScale(-0.05f, 0.05f);
-		this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 0.1f, 0.f);
+		this->sprite.setScale(-1.f, 1.f);
+		this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 1.f, 0.f);
 	}
 }
 
@@ -138,10 +141,10 @@ void Player::render(sf::RenderTarget& target)
 
 	target.draw(this->sprite); //ve len man hinh
 
-	sf::CircleShape circ;
+	/*sf::CircleShape circ;
 	circ.setFillColor(sf::Color::Red);
 	circ.setRadius(2.f);
 	circ.setPosition(this->sprite.getPosition());
 
-	target.draw(circ);
+	target.draw(circ);*/
 }

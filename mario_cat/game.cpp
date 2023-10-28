@@ -41,7 +41,7 @@ void Game::initMap()
 void Game::initPlayer()
 {
 
-	this->player = new Player(0, 220);
+	this->player = new Player(0, 0);
 }
 
 void Game::initEnemies() {
@@ -106,6 +106,8 @@ void Game::renderEnemies()
 	this->enemy->render(*this->window);
 }
 
+	this->window->draw(this->BackGr);
+}
 
 //Function
 void Game::pollEvent() {
@@ -142,13 +144,13 @@ void Game::render()
 		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
 			BackGr.setPosition(x, 0);
 			this->renderBackGr();
-		}
-	}*/
 	//this->renderBackGr();
 	this->renderMap();
-
-	sf::Vector2f position = this->player->position();
+	}*/
+	this->renderBackGr();
 	//cout << position.x;
+	//this->renderPlayer();
+	cout << position.x;
 	//this->renderPlayer();
 	//this->renderEnemies();
 
