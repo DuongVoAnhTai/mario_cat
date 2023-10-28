@@ -3,13 +3,11 @@
 
 void Player::initVariables()
 {
-
 	this->animState = PLAYER_ANIMATION_STATES::IDLE;
 }
 
 void Player::initTexture()
 {
-
 	if (!this->textureSheet.loadFromFile("PNG_file/Cat.png"))
 	{
 		std::cout << "ERROR LOAD IMAGE";
@@ -23,7 +21,6 @@ void Player::initAnimation()
 
 void Player::initSprite()
 {
-
 	this->sprite.setTexture(this->textureSheet);
 	this->currentFrame = sf::IntRect(0, 0, 35.5f, 48.f);
 	this->sprite.setTextureRect(this->currentFrame); //lay frame thu 1 cua hinh anh
@@ -32,7 +29,6 @@ void Player::initSprite()
 
 Player::Player(float pos_x, float pos_y)
 {
-
 	this->sprite.setPosition(pos_x, pos_y);
 	this->initVariables();
 	this->initTexture();
@@ -52,27 +48,25 @@ sf::Vector2f Player::position()
 
 void Player::updateMovement()
 {
-
 	this->animState = PLAYER_ANIMATION_STATES::IDLE;
 
 	//Left
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 	{
-		this->sprite.move(-2.f, 0.f);
+		this->sprite.move(-5.f, 0.f);
 		this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
 	}
 
 	//Right
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 	{
-		this->sprite.move(2.f, 0.f);
+		this->sprite.move(5.f, 0.f);
 		this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
 	}
 }
 
 void Player::updateAnimation()
 {
-
 	if (this->animState == PLAYER_ANIMATION_STATES::IDLE)
 	{
 		//thoi gian troi qua 0.5s thi reset frame
@@ -131,20 +125,11 @@ void Player::updateAnimation()
 
 void Player::update()
 {
-
 	this->updateMovement();
 	this->updateAnimation();
 }
 
 void Player::render(sf::RenderTarget& target)
 {
-
 	target.draw(this->sprite); //ve len man hinh
-
-	/*sf::CircleShape circ;
-	circ.setFillColor(sf::Color::Red);
-	circ.setRadius(2.f);
-	circ.setPosition(this->sprite.getPosition());
-
-	target.draw(circ);*/
 }

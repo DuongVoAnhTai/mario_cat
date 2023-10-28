@@ -54,7 +54,6 @@ public:
 	void updatetEnemies();
 	void renderEnemies();
 
-
 	//Function
 	void pollEvent();
 	void update();

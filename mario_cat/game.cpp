@@ -9,11 +9,9 @@ void Game::initVariables()
 
 void Game::initWindow()
 {
-
 	this->videoMode = sf::VideoMode::getFullscreenModes()[0];
 	this->window = new sf::RenderWindow(this->videoMode, "Cat_mario", sf::Style::Fullscreen);
 	this->window->setFramerateLimit(144); //gioi han khung hinh thanh 144
-
 }
 
 //BackGr
@@ -40,7 +38,6 @@ void Game::initMap()
 
 void Game::initPlayer()
 {
-
 	this->player = new Player(0, 0);
 }
 
@@ -50,7 +47,6 @@ void Game::initEnemies() {
 
 Game::Game()
 {
-
 	this->initVariables();
 	this->initWindow();
 	this->initMap();
@@ -61,7 +57,6 @@ Game::Game()
 
 Game::~Game()
 {
-
 	delete this->window;
 	delete this->player;
 	delete this->enemy;
@@ -69,11 +64,11 @@ Game::~Game()
 
 const bool Game::running()
 {
-
 	return this->window->isOpen();
 }
 
-void Game::renderBackGr() {
+void Game::renderBackGr() 
+{
 	this->window->draw(this->BackGr);
 }
 
@@ -85,13 +80,11 @@ void Game::renderMap()
 //Player
 void Game::updatePlayer()
 {
-
 	this->player->update();
 }
 
 void Game::renderPlayer()
 {
-
 	this->player->render(*this->window); //goi ham ve player
 }
 
@@ -106,9 +99,6 @@ void Game::renderEnemies()
 	this->enemy->render(*this->window);
 }
 
-	this->window->draw(this->BackGr);
-}
-
 //Function
 void Game::pollEvent() {
 
@@ -121,7 +111,6 @@ void Game::pollEvent() {
 
 void Game::update()
 {
-
 	this->pollEvent();
 	this->updatePlayer();
 	this->updatetEnemies();
@@ -129,7 +118,6 @@ void Game::update()
 
 void Game::render()
 {
-
 	/* quy tac ve hinh anh len man hinh
 		- xoa man hinh
 		- tao doi tuong
@@ -148,12 +136,10 @@ void Game::render()
 	this->renderMap();
 	}*/
 	this->renderBackGr();
+	this->renderMap();
 	//cout << position.x;
-	//this->renderPlayer();
-	cout << position.x;
-	//this->renderPlayer();
+	this->renderPlayer();
 	//this->renderEnemies();
-
 
 	//Draw
 	this->window->display();

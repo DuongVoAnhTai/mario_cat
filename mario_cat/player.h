@@ -27,6 +27,7 @@ private:
 	void initTexture();
 	void initSprite();
 	void initAnimation();
+
 public:
 	Player(float pos_x, float pos_y);
 	virtual ~Player();

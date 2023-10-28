@@ -7,7 +7,8 @@ void Enemy::initVariables()
 	this->speed = -1.f;
 }
 
-void Enemy::initTexture() {
+void Enemy::initTexture() 
+{
 	if (!this->textureSheet.loadFromFile("PNG_file/Mushroom.png"))
 	{
 		std::cout << "ERROR LOAD IMGE";
@@ -17,16 +18,15 @@ void Enemy::initTexture() {
 void Enemy::initSprite()
 {
 	this->sprite.setTexture(this->textureSheet);
-	this->frame = sf::IntRect(0, 0, 1024, 800);
+	this->frame = sf::IntRect(0, 0, 32, 25);
 	this->sprite.setTextureRect(this->frame);
-	this->sprite.setScale(0.1f, 0.1f);
+	this->sprite.setScale(1.f, 1.f);
 }
 
 void Enemy::initAnimation()
 {
 
 }
-
 
 Enemy::Enemy(float pos_x, float pos_y)
 {
@@ -47,6 +47,7 @@ void Enemy::update()
 	this->sprite.move(this->speed, 0.f);
 }
 
-void Enemy::render(sf::RenderTarget& target) {
+void Enemy::render(sf::RenderTarget& target)
+{
 	target.draw(this->sprite);
 }
