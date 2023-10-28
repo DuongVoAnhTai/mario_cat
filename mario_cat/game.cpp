@@ -144,7 +144,7 @@ void Game::render()
 			this->renderBackGr();
 		}
 	}*/
-	this->renderBackGr();
+	//this->renderBackGr();
 	this->renderMap();
 
 	sf::Vector2f position = this->player->position();
