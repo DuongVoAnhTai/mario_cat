@@ -136,6 +136,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="screen.cpp" />
+    <ClCompile Include="tile.cpp" />
     <ClCompile Include="tileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,7 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="screen.h" />
+    <ClInclude Include="tile.h" />
     <ClInclude Include="tileMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

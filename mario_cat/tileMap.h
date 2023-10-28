@@ -1,27 +1,23 @@
 #pragma once
-#include "game.h"
+#include "tile.h"
 
 #define MAX_TILE 20
-
-class TileMat : public Game
-{
-public:
-	TileMat() { ; }
-	~TileMat() { ; }
-};
 
 class GameMap
 {
 private:
 	Map game_map;
 	TileMat tile_mat[MAX_TILE];
-	sf::Texture tileSheet;
+	sf::Texture* tileSheet;
+	sf::VideoMode size;
 
 public:
-	GameMap() { ; }
-	~GameMap() { ; }
+	GameMap();
+	~GameMap();
 
 	void loadMap(char* name);
+
+	void update();
 	void render(sf::RenderTarget& target);
 };
 

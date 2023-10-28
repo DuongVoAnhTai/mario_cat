@@ -2,8 +2,9 @@
 #include "game.h"
 
 int main()
-{
+{	
 	Game game;
+
 
 	//game loop
 	while (game.running())

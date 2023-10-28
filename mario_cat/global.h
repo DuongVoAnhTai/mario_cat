@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 using namespace std;
 
 //SFML
@@ -8,19 +9,22 @@ using namespace std;
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
-#define TILE_SIZE 64
+#define TILE_SIZE 48
 
-#define MAX_X 400 //Number column of the map
+#define MAX_X 800 //Number column of the map
 #define MAX_Y 15 //Number row of the map
 
 struct Map
 {
+	//Vi tri dau cua map
 	int start_x;
 	int start_y;
 
-	int max_x;
+	//Vi tri hien tai cua map
+	int max_x; 
 	int max_y;
 
-	int tile[MAX_X][MAX_Y];
+	//Gia tri cua o
+	int tile[MAX_Y][MAX_X];
 	char* file_name;
 };
