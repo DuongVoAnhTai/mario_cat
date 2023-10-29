@@ -16,6 +16,7 @@ public:
 	~GameMap();
 
 	void loadMap(char* name);
+	Map getMap() const { return game_map; }
 
 	void update();
 	void render(sf::RenderTarget& target);

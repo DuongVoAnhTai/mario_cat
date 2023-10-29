@@ -34,11 +34,12 @@ void Game::initMap()
 	char name[] = "PNG_file/map_demo.txt";
 	this->map.loadMap(name);
 	this->map.update();
+	this->map_data = map.getMap();
 }
 
 void Game::initPlayer()
 {
-	this->player = new Player(0, 0);
+	this->player = new Player();
 }
 
 void Game::initEnemies() {
@@ -80,7 +81,7 @@ void Game::renderMap()
 //Player
 void Game::updatePlayer()
 {
-	this->player->update();
+	this->player->update(this->map_data);
 }
 
 void Game::renderPlayer()

@@ -19,6 +19,7 @@ private:
 	GameMap map;
 
 	//Player
+	Map map_data;
 	Player* player;
 
 	//Enemies
