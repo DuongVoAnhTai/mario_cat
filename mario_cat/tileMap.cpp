@@ -110,7 +110,7 @@ void GameMap::render(sf::RenderTarget& target)
 			if ((map_x >= 0 && map_x < MAX_X) && (map_y >= 0 && map_y < MAX_Y))
 			{
 				int val = game_map.tile[map_y][map_x];
-					cout << val << endl;
+					//cout << val << endl;
 				if (val > 0)
 				{
 					tile_mat[val].setRect(j, i);

@@ -3,7 +3,7 @@
 
 #define GRAVITY 0.8
 #define MAX_FALL_SPEED 10
-#define PLAYER_SPEED 8
+#define PLAYER_SPEED 4
 
 enum PLAYER_ANIMATION_STATES
 {
@@ -46,11 +46,9 @@ public:
 	virtual ~Player();
 
 	//Function
-	sf::Vector2f position();
 
 	void updateAnimation();
 	void updateMovement(Map& map_data);
-	void doPlayer();
 	void collisionMap(Map& map_data);
 
 	void update(Map& map_data);

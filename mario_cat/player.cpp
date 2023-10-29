@@ -27,7 +27,7 @@ void Player::initSprite()
 	this->sprite.setScale(sf::Vector2f(1.f, 1.f)); //set lai ti le cua hinh anh
 }
 
-Player::Player(/*float pos_x, float pos_y*/)
+Player::Player()
 {
 	x_val = 0;
 	y_val = 0;
@@ -36,7 +36,6 @@ Player::Player(/*float pos_x, float pos_y*/)
 	y_pos = 0;
 
 	on_ground = false;
-	//this->sprite.setPosition(pos_x, pos_y);
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
@@ -46,11 +45,6 @@ Player::Player(/*float pos_x, float pos_y*/)
 Player::~Player()
 {
 
-}
-
-sf::Vector2f Player::position()
-{
-	return this->sprite.getPosition();
 }
 
 void Player::updateMovement(Map& map_data)
