@@ -3,7 +3,7 @@
 
 #define GRAVITY 0.8
 #define MAX_FALL_SPEED 10
-#define PLAYER_SPEED 4
+#define PLAYER_SPEED 6
 
 enum PLAYER_ANIMATION_STATES
 {

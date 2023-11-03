@@ -11,7 +11,7 @@ void Game::initWindow()
 {
 	this->videoMode = sf::VideoMode::getFullscreenModes()[0];
 	this->window = new sf::RenderWindow(this->videoMode, "Cat_mario", sf::Style::Fullscreen);
-	this->window->setFramerateLimit(144); //gioi han khung hinh thanh 144
+	this->window->setFramerateLimit(60); //gioi han khung hinh thanh 144
 }
 
 //BackGr
