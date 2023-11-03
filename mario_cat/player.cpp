@@ -74,6 +74,19 @@ void Player::updateMovement(Map& map_data)
 		this->sprite.move(x_val, 0.f);
 		this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
 	}
+
+	//Jump
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+	{
+		if (on_ground == true)
+		{
+			y_val = -18;
+			this->sprite.move(0, y_val);
+			on_ground = false;
+		}
+		this->sprite.move(x_val, 0);
+		this->animState = PLAYER_ANIMATION_STATES::JUMPING;
+	}
 	collisionMap(map_data);
 }
 
@@ -103,14 +116,23 @@ void Player::updateAnimation()
 		//thoi gian troi qua 0.5s thi reset frame
 		if (this->animationTimer.getElapsedTime().asSeconds() >= 0.5)
 		{
-			this->currentFrame.top = 0.f;
-			this->currentFrame.left += 35.5f;
-			if (this->currentFrame.left >= 70.f)
+			if (on_ground == true)
 			{
-				this->currentFrame.left = 0;
+				this->currentFrame.top = 0.f;
+				this->currentFrame.left += 35.5f;
+				if (this->currentFrame.left >= 70.f)
+				{
+					this->currentFrame.left = 0;
+				}
+				this->animationTimer.restart();
+				this->sprite.setTextureRect(this->currentFrame);
 			}
-			this->animationTimer.restart();
-			this->sprite.setTextureRect(this->currentFrame);
+			else
+			{
+				this->currentFrame.top = 96;
+				this->currentFrame.left = 0.f;
+				this->sprite.setTextureRect(this->currentFrame);
+			}
 		}
 		this->sprite.setScale(1.f, 1.f);
 		this->sprite.setOrigin(0.f, 0.f);
@@ -121,24 +143,43 @@ void Player::updateAnimation()
 		//thoi gian troi qua 0.5s thi reset frame
 		if (this->animationTimer.getElapsedTime().asSeconds() >= 0.5)
 		{
-			this->currentFrame.top = 0.f;
-			this->currentFrame.left += 35.5f;
-			if (this->currentFrame.left >= 70.f)
+			if (on_ground == true)
 			{
-				this->currentFrame.left = 0;
+				this->currentFrame.top = 0.f;
+				this->currentFrame.left += 35.5f;
+				if (this->currentFrame.left >= 70.f)
+				{
+					this->currentFrame.left = 0;
+				}
+				this->animationTimer.restart();
+				this->sprite.setTextureRect(this->currentFrame);
 			}
-			this->animationTimer.restart();
-			this->sprite.setTextureRect(this->currentFrame);
+			else
+			{
+				this->currentFrame.top = 96;
+				this->currentFrame.left = 0.f;
+				this->sprite.setTextureRect(this->currentFrame);
+			}
 		}
 		this->sprite.setScale(-1.f, 1.f);
 		this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 1.f, 0.f);
 	}
+
+	/*else if (this->animState == PLAYER_ANIMATION_STATES::JUMPING)
+	{
+		if (on_ground == false)
+		{
+			this->currentFrame.top = 96;
+			this->currentFrame.left = 35.5f;
+			this->sprite.setTextureRect(this->currentFrame);
+		}
+	}*/
 }
 
 void Player::collisionMap(Map& map_data)
 {
 	int x1 = 0;
-	int x2 = 0;
+ 	int x2 = 0;
 
 	int y1 = 0;
 	int y2 = 0;
