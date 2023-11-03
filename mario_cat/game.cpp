@@ -31,7 +31,7 @@ void Game::initBackGr() {
 //Map
 void Game::initMap()
 {
-	char name[] = "PNG_file/map_demo.txt";
+	char name[] = "PNG_file/map.txt";
 	this->map.loadMap(name);
 	this->map.update();
 	this->map_data = map.getMap();
