@@ -2,6 +2,7 @@
 #include"player.h"
 #include"enemy.h"
 #include"tileMap.h"
+#include<vector>
 
 class Game
 {
@@ -24,6 +25,7 @@ private:
 
 	//Enemies
 	Enemy* enemy;
+	vector<Enemy*> enemy_list;
 
 	//Private function
 	void initVariables();
@@ -52,7 +54,8 @@ public:
 	void renderPlayer();
 
 	//Enemies
-	void updatetEnemies();
+	vector<Enemy*> listEnemy();
+	void updateEnemies();
 	void renderEnemies();
 
 	//Function

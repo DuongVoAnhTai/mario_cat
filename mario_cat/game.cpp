@@ -43,7 +43,7 @@ void Game::initPlayer()
 }
 
 void Game::initEnemies() {
-	this->enemy = new Enemy(1000.f, 50.f);
+	this->enemy_list = listEnemy();
 }
 
 Game::Game()
@@ -90,14 +90,44 @@ void Game::renderPlayer()
 }
 
 //Enemies
-void Game::updatetEnemies()
+vector <Enemy*> Game::listEnemy()
 {
-	this->enemy->update();
+	vector<Enemy*> list_enemy;
+	Enemy* enemy_obj = new Enemy[20];
+
+	for (int i = 0; i < 20; i++)
+	{
+		Enemy* p_threat = (enemy_obj + i);
+		if (p_threat != NULL)
+		{
+			p_threat->set_x_pos(700 + i * 100);
+			p_threat->set_y_pos(250);
+
+			list_enemy.push_back(p_threat);
+		}
+	}
+	return list_enemy;
+}
+
+
+void Game::updateEnemies()
+{
+	//this->enemy->update();
+	for (int i = 0; i < enemy_list.size(); i++)
+	{
+		Enemy* p_enemy = enemy_list.at(i);
+		if (p_enemy != NULL)
+		{
+			p_enemy->setMapXY(map_data.start_x, map_data.start_y);
+			p_enemy->doPlayer(map_data);
+			p_enemy->render(*this->window);
+		}
+	}
 }
 
 void Game::renderEnemies()
 {
-	this->enemy->render(*this->window);
+	//this->enemy->render(*this->window);
 }
 
 //Function
@@ -114,7 +144,6 @@ void Game::update()
 {
 	this->pollEvent();
 	this->updatePlayer();
-	this->updatetEnemies();
 }
 
 void Game::render()
@@ -140,6 +169,8 @@ void Game::render()
 	this->renderMap();
 	//cout << position.x;
 	this->renderPlayer();
+	this->updateEnemies();
+
 	//this->renderEnemies();
 
 	//Draw
