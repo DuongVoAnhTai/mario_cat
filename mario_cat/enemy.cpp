@@ -25,7 +25,7 @@ void Enemy::initTexture()
 void Enemy::initSprite()
 {
 	this->sprite.setTexture(this->textureSheet);
-	this->frame = sf::IntRect(0, 0, 32, 25);
+	this->frame = sf::IntRect(0, 0, 61, 47);
 	this->sprite.setTextureRect(this->frame);
 	this->sprite.setScale(1.f, 1.f);
 }

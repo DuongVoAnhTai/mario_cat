@@ -100,7 +100,7 @@ vector <Enemy*> Game::listEnemy()
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
 		{
-			p_threat->set_x_pos(700 + i * 100);
+			p_threat->set_x_pos(700 + i * 1200);
 			p_threat->set_y_pos(250);
 
 			list_enemy.push_back(p_threat);
