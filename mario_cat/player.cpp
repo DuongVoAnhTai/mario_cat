@@ -1,6 +1,7 @@
 ﻿#include "global.h"
 #include"player.h"
 
+
 void Player::initVariables()
 {
 	this->animState = PLAYER_ANIMATION_STATES::IDLE;
@@ -35,7 +36,12 @@ Player::Player()
 	x_pos = 0;
 	y_pos = 0;
 
+	map_x = 0;
+	map_y = 0;
+
 	on_ground = false;
+
+	size = sf::VideoMode::getDesktopMode();
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
@@ -89,6 +95,28 @@ void Player::updateMovement(Map& map_data)
 		this->animState = PLAYER_ANIMATION_STATES::JUMPING;
 	}
 	collisionMap(map_data);
+	CenterEntityOnMap(map_data);
+}
+
+void Player::CenterEntityOnMap(Map& map_data)
+{
+	int MAX_WIDTH = size.width;
+	int MAX_HEIGHT = size.height;
+	map_data.start_x = x_pos - (MAX_WIDTH / 2);
+	if (map_data.start_x < 0)
+	{
+		map_data.start_x = 0;
+	}
+	else if (map_data.start_x + MAX_WIDTH >= map_data.max_x)
+	{
+		map_data.start_x = map_data.max_x - MAX_WIDTH;
+	}
+
+	map_data.start_y = y_pos - (MAX_HEIGHT / 2);
+	if (map_data.start_y + MAX_HEIGHT >= map_data.max_y)
+	{
+		map_data.start_y = map_data.max_y - MAX_HEIGHT;
+	}
 }
 
 void Player::updateAnimation()
@@ -165,16 +193,6 @@ void Player::updateAnimation()
 		this->sprite.setScale(-1.f, 1.f);
 		this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 1.f, 0.f);
 	}
-
-	/*else if (this->animState == PLAYER_ANIMATION_STATES::JUMPING)
-	{
-		if (on_ground == false)
-		{
-			this->currentFrame.top = 96;
-			this->currentFrame.left = 35.5f;
-			this->sprite.setTextureRect(this->currentFrame);
-		}
-	}*/
 }
 
 void Player::collisionMap(Map& map_data)
@@ -266,7 +284,7 @@ void Player::collisionMap(Map& map_data)
 
 void Player::update(Map& map_data)
 {
-	this->sprite.setPosition(x_pos, y_pos);
+	this->sprite.setPosition(x_pos - map_x, y_pos - map_y);
 	this->updateMovement(map_data);
 	this->updateAnimation();
 }

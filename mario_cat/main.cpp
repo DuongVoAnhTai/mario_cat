@@ -9,7 +9,6 @@ int main()
 	//game loop
 	while (game.running())
 	{
-
 		//update
 		game.update();
 

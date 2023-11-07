@@ -144,6 +144,7 @@ void Game::update()
 {
 	this->pollEvent();
 	this->updatePlayer();
+	this->player->setMapXY(map_data.start_x, map_data.start_y);
 }
 
 void Game::render()
@@ -154,24 +155,15 @@ void Game::render()
 		- ve len man hinh
 	*/
 
+	
 	this->window->clear();
 
 	//Render game
-	//Vẽ background nhiều lần để lặp lại nó trên cửa sổ đồ họa
-	/*for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
-		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
-			BackGr.setPosition(x, 0);
-			this->renderBackGr();
-	//this->renderBackGr();
-	this->renderMap();
-	}*/
 	this->renderBackGr();
-	this->renderMap();
-	//cout << position.x;
-	this->renderPlayer();
 	this->updateEnemies();
-
-	//this->renderEnemies();
+	this->map.setMap(map_data);
+	this->renderMap();
+	this->renderPlayer();
 
 	//Draw
 	this->window->display();
