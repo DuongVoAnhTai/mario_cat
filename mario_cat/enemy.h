@@ -2,6 +2,7 @@
 
 #define ENEMY_GRAVITY 0.8
 #define ENEMY_MAX_FALL_SPEED 10
+#define SPEED_ENEMY 3
 
 class Enemy
 {
@@ -11,7 +12,6 @@ private:
 
 	sf::IntRect frame;
 
-	float speed;
 	bool on_ground;
 	int come_back_time;
 	/*int width_frame;
@@ -23,6 +23,11 @@ private:
 	int map_x;
 	int map_y;
 
+	int type_move;
+	int animationA;
+	int animationB;
+	Input input_type;
+
 	//Core
 	void initVariables();
 	void initTexture();
@@ -32,6 +37,11 @@ private:
 public:
 	Enemy();
 	virtual ~Enemy();
+
+	enum TyoeMove
+	{
+		MOVE_IN_SPACE = 1
+	};
 
 	//Function
 	/*int get_width_frame() { return width_frame; }
@@ -49,6 +59,12 @@ public:
 
 	void doPlayer(Map& gmap);	
 	void collisionMap(Map& gmap);
+
+	void set_type_move(const int& typeMove) { type_move = typeMove; }
+	void setAnimation(const int& pos_a, const int& pos_b) { animationA = pos_a; animationB = pos_b; }
+	void set_input_left(const int& ipLeft) { input_type.left = ipLeft; }
+	void impMoveType(sf::RenderTarget& target);
+	//void impMoveType
 
 	void update();
 	void render(sf::RenderTarget& target);

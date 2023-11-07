@@ -28,3 +28,9 @@ struct Map
 	int tile[MAX_Y][MAX_X];
 	char* file_name;
 };
+
+struct Input {
+	int left;
+	int right;
+	int jump;
+};
