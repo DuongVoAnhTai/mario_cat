@@ -36,6 +36,12 @@ Player::Player()
 	y_pos = 0;
 
 	on_ground = false;
+
+	mapX = 0;
+	mapY = 0;
+
+	this->size = sf::VideoMode::getDesktopMode();
+
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
@@ -89,6 +95,8 @@ void Player::updateMovement(Map& map_data)
 		this->animState = PLAYER_ANIMATION_STATES::JUMPING;
 	}
 	collisionMap(map_data);
+	centerEntityOnMap(map_data);
+
 }
 
 void Player::updateAnimation()
@@ -264,9 +272,33 @@ void Player::collisionMap(Map& map_data)
 	}
 }
 
+void Player::centerEntityOnMap(Map& map_data)
+{
+	map_data.start_x = x_pos - (this->size.width / 2.0);
+	if (map_data.start_x < 0)
+	{
+		map_data.start_x = 0;
+	}
+	else if (map_data.start_x + this->size.width >= map_data.max_x)
+	{
+		map_data.start_x = map_data.max_x - this->size.width;
+	}
+
+	/*map_data.start_y = y_pos - (this->size.height / 2.0);
+	if (map_data.start_y < 0)
+	{
+		map_data.start_y = 0;
+	}
+	else if (map_data.start_y + this->size.height >= map_data.max_y)
+	{
+		map_data.start_y = map_data.max_y - this->size.height;
+	}*/
+}
+
+
 void Player::update(Map& map_data)
 {
-	this->sprite.setPosition(x_pos, y_pos);
+	this->sprite.setPosition(x_pos - mapX, y_pos - mapY);
 	this->updateMovement(map_data);
 	this->updateAnimation();
 }

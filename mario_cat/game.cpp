@@ -34,7 +34,6 @@ void Game::initMap()
 	char name[] = "PNG_file/map.txt";
 	this->map.loadMap(name);
 	this->map.update();
-	this->map_data = map.getMap();
 }
 
 void Game::initPlayer()
@@ -152,7 +151,7 @@ void Game::pollEvent() {
 void Game::update()
 {
 	this->pollEvent();
-	this->updatePlayer();
+	
 }
 
 void Game::render()
@@ -175,10 +174,19 @@ void Game::render()
 	this->renderMap();
 	}*/
 	this->renderBackGr();
-	this->renderMap();
-	//cout << position.x;
+	
+	this->map_data = map.getMap();
+
+	this->player->setMapXY(map_data.start_x, map_data.start_y);
+	this->updatePlayer();
 	this->renderPlayer();
+
+	map.setMap(map_data); 
+	this->renderMap();
+
 	this->updateEnemies();
+
+	//cout << position.x;
 
 	//this->renderEnemies();
 

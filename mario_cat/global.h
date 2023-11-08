@@ -12,7 +12,7 @@ using namespace std;
 #define TILE_SIZE 48
 
 #define MAX_X 300 //Number column of the map
-#define MAX_Y 20 //Number row of the map
+#define MAX_Y 21 //Number row of the map
 
 struct Map
 {
