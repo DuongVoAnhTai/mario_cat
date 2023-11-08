@@ -24,7 +24,7 @@ private:
 	Player* player;
 
 	//Enemies
-	Enemy* enemy;
+	//Enemy* enemy;
 	vector<Enemy*> enemy_list;
 
 	//Private function

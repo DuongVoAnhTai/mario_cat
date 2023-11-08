@@ -34,7 +34,6 @@ void Game::initMap()
 	char name[] = "PNG_file/map.txt";
 	this->map.loadMap(name);
 	this->map.update();
-	this->map_data = map.getMap();
 }
 
 void Game::initPlayer()
@@ -60,7 +59,7 @@ Game::~Game()
 {
 	delete this->window;
 	delete this->player;
-	delete this->enemy;
+	//delete this->enemy;
 }
 
 const bool Game::running()
@@ -100,8 +99,14 @@ vector <Enemy*> Game::listEnemy()
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
 		{
+			p_threat->set_type_move(Enemy::MOVE_IN_SPACE);
 			p_threat->set_x_pos(700 + i * 1200);
 			p_threat->set_y_pos(250);
+
+			int pos1 = p_threat->get_x_pos() - 120;
+			int pos2 = p_threat->get_x_pos() + 120;
+			p_threat->set_input_left(1);
+			p_threat->setAnimation(pos1, pos2);
 
 			list_enemy.push_back(p_threat);
 		}
@@ -119,6 +124,7 @@ void Game::updateEnemies()
 		if (p_enemy != NULL)
 		{
 			p_enemy->setMapXY(map_data.start_x, map_data.start_y);
+			p_enemy->impMoveType(*this->window);
 			p_enemy->doPlayer(map_data);
 			p_enemy->render(*this->window);
 		}
@@ -133,8 +139,10 @@ void Game::renderEnemies()
 //Function
 void Game::pollEvent() {
 
-	while (this->window->pollEvent(this->ev)) {
-		if (this->ev.type == sf::Event::KeyPressed && this->ev.key.code == sf::Keyboard::Escape) {
+	while (this->window->pollEvent(this->ev)) 
+	{
+		if (this->ev.type == sf::Event::KeyPressed && this->ev.key.code == sf::Keyboard::Escape) 
+		{
 			this->window->close();
 		}
 	}
@@ -143,8 +151,7 @@ void Game::pollEvent() {
 void Game::update()
 {
 	this->pollEvent();
-	this->updatePlayer();
-	this->player->setMapXY(map_data.start_x, map_data.start_y);
+	
 }
 
 void Game::render()
@@ -159,11 +166,30 @@ void Game::render()
 	this->window->clear();
 
 	//Render game
-	this->renderBackGr();
-	this->updateEnemies();
-	this->map.setMap(map_data);
+	//Vẽ background nhiều lần để lặp lại nó trên cửa sổ đồ họa
+	/*for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
+		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
+			BackGr.setPosition(x, 0);
+			this->renderBackGr();
+	//this->renderBackGr();
 	this->renderMap();
+	}*/
+	this->renderBackGr();
+	
+	this->map_data = map.getMap();
+
+	this->player->setMapXY(map_data.start_x, map_data.start_y);
+	this->updatePlayer();
 	this->renderPlayer();
+
+	map.setMap(map_data); 
+	this->renderMap();
+
+	this->updateEnemies();
+
+	//cout << position.x;
+
+	//this->renderEnemies();
 
 	//Draw
 	this->window->display();

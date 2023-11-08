@@ -36,12 +36,13 @@ Player::Player()
 	x_pos = 0;
 	y_pos = 0;
 
-	map_x = 0;
-	map_y = 0;
-
 	on_ground = false;
 
-	size = sf::VideoMode::getDesktopMode();
+	mapX = 0;
+	mapY = 0;
+
+	this->size = sf::VideoMode::getDesktopMode();
+
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
@@ -282,9 +283,21 @@ void Player::collisionMap(Map& map_data)
 	}
 }
 
+	/*map_data.start_y = y_pos - (this->size.height / 2.0);
+	if (map_data.start_y < 0)
+	{
+		map_data.start_y = 0;
+	}
+	else if (map_data.start_y + this->size.height >= map_data.max_y)
+	{
+		map_data.start_y = map_data.max_y - this->size.height;
+	}*/
+}
+
+
 void Player::update(Map& map_data)
 {
-	this->sprite.setPosition(x_pos - map_x, y_pos - map_y);
+	this->sprite.setPosition(x_pos - mapX, y_pos - mapY);
 	this->updateMovement(map_data);
 	this->updateAnimation();
 }

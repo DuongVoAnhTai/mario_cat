@@ -21,17 +21,17 @@ private:
 	sf::Texture textureSheet;
 	sf::Clock animationTimer;
 	sf::VideoMode size;
+
 	float x_val;
 	float y_val;
 
 	float x_pos;
 	float y_pos;
 
-	int map_x;
-	int map_y;
-
 	bool on_ground;
 
+	int mapX;
+	int mapY;
 
 	//Animation
 	short animState;
@@ -54,8 +54,9 @@ public:
 	void updateAnimation();
 	void updateMovement(Map& map_data);
 	void collisionMap(Map& map_data);
-	void setMapXY(const int map_x,const int map_y) { this->map_x = map_x; this->map_y = map_y; }
-	void CenterEntityOnMap(Map& map_data);
+	void setMapXY(const int& map_x, const int& map_y) { mapX = map_x; mapY = map_y; }
+	void centerEntityOnMap(Map& map_data);
+
 	void update(Map& map_data);
 	void render(sf::RenderTarget& target); //ve 1 anh len man hinh
 };

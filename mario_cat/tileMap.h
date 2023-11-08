@@ -17,7 +17,8 @@ public:
 
 	void loadMap(char* name);
 	Map getMap() const { return game_map; }
-	void setMap(Map& map_data) { game_map = map_data; };
+	void setMap(Map& map_data) { game_map = map_data; }
+
 	void update();
 	void render(sf::RenderTarget& target);
 };
