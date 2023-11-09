@@ -35,6 +35,8 @@ Player::Player()
 	x_pos = 0;
 	y_pos = 0;
 
+	come_back_time = 0;
+
 	on_ground = false;
 	this->initVariables();
 	this->initTexture();
@@ -49,6 +51,8 @@ Player::~Player()
 
 void Player::updateMovement(Map& map_data)
 {
+	if (come_back_time == 0) {
+
 	this->animState = PLAYER_ANIMATION_STATES::IDLE;
 	x_val = 0;
 	y_val += 0.8;
@@ -89,6 +93,16 @@ void Player::updateMovement(Map& map_data)
 		this->animState = PLAYER_ANIMATION_STATES::JUMPING;
 	}
 	collisionMap(map_data);
+	}
+	if (come_back_time > 0) {
+		come_back_time--;
+		if (come_back_time == 0) {
+			x_pos = 0;
+			y_pos = 0;
+			x_val = 0;
+			y_val = 0;
+		}
+	}
 }
 
 void Player::updateAnimation()
@@ -261,6 +275,10 @@ void Player::collisionMap(Map& map_data)
 	else if (x_pos + this->currentFrame.width > map_data.max_x)
 	{
 		x_pos = map_data.max_x - this->currentFrame.width - 1;
+	}
+
+	if (y_pos > map_data.max_y) {
+		come_back_time = 60;
 	}
 }
 

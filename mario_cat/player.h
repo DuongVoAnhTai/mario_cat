@@ -27,6 +27,8 @@ private:
 	float x_pos;
 	float y_pos;
 
+	int come_back_time;
+
 	bool on_ground;
 
 	//Animation
