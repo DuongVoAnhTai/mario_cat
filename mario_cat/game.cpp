@@ -80,6 +80,8 @@ void Game::renderMap()
 //Player
 void Game::updatePlayer()
 {
+	this->map_data = map.getMap();
+	this->player->setMapXY(map_data.start_x, map_data.start_y);
 	this->player->update(this->map_data);
 }
 
@@ -92,9 +94,9 @@ void Game::renderPlayer()
 vector <Enemy*> Game::listEnemy()
 {
 	vector<Enemy*> list_enemy;
-	Enemy* enemy_obj = new Enemy[20];
+	Enemy* enemy_obj = new Enemy[30];
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
@@ -117,10 +119,11 @@ vector <Enemy*> Game::listEnemy()
 
 void Game::updateEnemies()
 {
-	//this->enemy->update();
+	
 	for (int i = 0; i < enemy_list.size(); i++)
 	{
 		Enemy* p_enemy = enemy_list.at(i);
+		//p_enemy->update();
 		if (p_enemy != NULL)
 		{
 			p_enemy->setMapXY(map_data.start_x, map_data.start_y);
@@ -133,6 +136,8 @@ void Game::updateEnemies()
 
 void Game::renderEnemies()
 {
+	this->updateEnemies();
+
 	//this->enemy->render(*this->window);
 }
 
@@ -151,7 +156,8 @@ void Game::pollEvent() {
 void Game::update()
 {
 	this->pollEvent();
-	
+
+	this->updatePlayer();
 }
 
 void Game::render()
@@ -162,34 +168,15 @@ void Game::render()
 		- ve len man hinh
 	*/
 
-	
 	this->window->clear();
 
-	//Render game
-	//Vẽ background nhiều lần để lặp lại nó trên cửa sổ đồ họa
-	/*for (int x = 0; x < this->window->getSize().x; x += BackGrText.getSize().x) {
-		for (int y = 0; y < this->window->getSize().y; y += BackGrText.getSize().y) {
-			BackGr.setPosition(x, 0);
-			this->renderBackGr();
-	//this->renderBackGr();
-	this->renderMap();
-	}*/
 	this->renderBackGr();
 	
-	this->map_data = map.getMap();
-
-	this->player->setMapXY(map_data.start_x, map_data.start_y);
-	this->updatePlayer();
 	this->renderPlayer();
-
-	map.setMap(map_data); 
+	map.setMap(map_data);
 	this->renderMap();
 
-	this->updateEnemies();
-
-	//cout << position.x;
-
-	//this->renderEnemies();
+	this->renderEnemies();
 
 	//Draw
 	this->window->display();

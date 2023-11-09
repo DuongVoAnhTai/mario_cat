@@ -87,7 +87,7 @@ void Player::updateMovement(Map& map_data)
 	{
 		if (on_ground == true)
 		{
-			y_val = -18;
+			y_val = -25;
 			this->sprite.move(0, y_val);
 			on_ground = false;
 
@@ -96,14 +96,14 @@ void Player::updateMovement(Map& map_data)
 		this->animState = PLAYER_ANIMATION_STATES::JUMPING;
 	}
 	collisionMap(map_data);
-	CenterEntityOnMap(map_data);
+	centerEntityOnMap(map_data);
 }
 
-void Player::CenterEntityOnMap(Map& map_data)
+void Player::centerEntityOnMap(Map& map_data)
 {
 	int MAX_WIDTH = size.width;
 	int MAX_HEIGHT = size.height;
-	map_data.start_x = x_pos - (MAX_WIDTH / 2);
+	map_data.start_x = x_pos - (MAX_WIDTH / 2.0);
 	if (map_data.start_x < 0)
 	{
 		map_data.start_x = 0;
@@ -113,11 +113,11 @@ void Player::CenterEntityOnMap(Map& map_data)
 		map_data.start_x = map_data.max_x - MAX_WIDTH;
 	}
 
-	map_data.start_y = y_pos - (MAX_HEIGHT / 2);
+	/*map_data.start_y = y_pos - (MAX_HEIGHT / 2);
 	if (map_data.start_y + MAX_HEIGHT >= map_data.max_y)
 	{
 		map_data.start_y = map_data.max_y - MAX_HEIGHT;
-	}
+	}*/
 }
 
 void Player::updateAnimation()
@@ -282,18 +282,6 @@ void Player::collisionMap(Map& map_data)
 		x_pos = map_data.max_x - this->currentFrame.width - 1;
 	}
 }
-
-	/*map_data.start_y = y_pos - (this->size.height / 2.0);
-	if (map_data.start_y < 0)
-	{
-		map_data.start_y = 0;
-	}
-	else if (map_data.start_y + this->size.height >= map_data.max_y)
-	{
-		map_data.start_y = map_data.max_y - this->size.height;
-	}*/
-}
-
 
 void Player::update(Map& map_data)
 {

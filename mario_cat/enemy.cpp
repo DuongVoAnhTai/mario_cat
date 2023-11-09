@@ -194,7 +194,6 @@ void Enemy::collisionMap(Map& gmap)
 
 void Enemy::update()
 {
-	//this->sprite.move(this->speed, 0.f);
 }
 
 void Enemy::render(sf::RenderTarget& target)
