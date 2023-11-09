@@ -49,16 +49,27 @@ Game::Game()
 {
 	this->initVariables();
 	this->initWindow();
+	this->initBackGr();
 	this->initMap();
 	this->initPlayer();
 	this->initEnemies();
-	this->initBackGr();
 }
 
 Game::~Game()
 {
 	delete this->window;
 	delete this->player;
+
+	for (int i = 0; i < enemy_list.size(); i++)
+	{
+		Enemy* p_threat = enemy_list.at(i);
+		if (p_threat)
+		{
+			p_threat = NULL;
+		}
+	}
+
+	enemy_list.clear();
 	//delete this->enemy;
 }
 
