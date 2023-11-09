@@ -12,7 +12,7 @@ using namespace std;
 #define TILE_SIZE 48
 
 #define MAX_X 300 //Number column of the map
-#define MAX_Y 20 //Number row of the map
+#define MAX_Y 21 //Number row of the map
 
 struct Map
 {
@@ -27,4 +27,10 @@ struct Map
 	//Gia tri cua o
 	int tile[MAX_Y][MAX_X];
 	char* file_name;
+};
+
+struct Input {
+	int left;
+	int right;
+	int jump;
 };

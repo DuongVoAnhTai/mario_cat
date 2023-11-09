@@ -1,6 +1,7 @@
 ﻿#include "global.h"
 #include"player.h"
 
+
 void Player::initVariables()
 {
 	this->animState = PLAYER_ANIMATION_STATES::IDLE;
@@ -38,6 +39,12 @@ Player::Player()
 	come_back_time = 0;
 
 	on_ground = false;
+
+	mapX = 0;
+	mapY = 0;
+
+	this->size = sf::VideoMode::getDesktopMode();
+
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
@@ -53,46 +60,47 @@ void Player::updateMovement(Map& map_data)
 {
 	if (come_back_time == 0) {
 
-	this->animState = PLAYER_ANIMATION_STATES::IDLE;
-	x_val = 0;
-	y_val += 0.8;
-	//this->sprite.move(0.f, y_val);
+		this->animState = PLAYER_ANIMATION_STATES::IDLE;
+		x_val = 0;
+		y_val += 0.8;
+		//this->sprite.move(0.f, y_val);
 
-	if (y_val >= MAX_FALL_SPEED)
-	{
-		y_val = MAX_FALL_SPEED;
-	}
-
-	//Left
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-	{
-		x_val -= PLAYER_SPEED;
-		this->sprite.move(x_val, 0.f);
-		this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
-	}
-
-	//Right
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-	{
-		x_val += PLAYER_SPEED;
-		this->sprite.move(x_val, 0.f);
-		this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
-	}
-
-	//Jump
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-	{
-		if (on_ground == true)
+		if (y_val >= MAX_FALL_SPEED)
 		{
-			y_val = -18;
-			this->sprite.move(0, y_val);
-			on_ground = false;
-
+			y_val = MAX_FALL_SPEED;
 		}
-		this->sprite.move(x_val, 0);
-		this->animState = PLAYER_ANIMATION_STATES::JUMPING;
-	}
-	collisionMap(map_data);
+
+		//Left
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+		{
+			x_val -= PLAYER_SPEED;
+			this->sprite.move(x_val, 0.f);
+			this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
+		}
+
+		//Right
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+		{
+			x_val += PLAYER_SPEED;
+			this->sprite.move(x_val, 0.f);
+			this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
+		}
+
+		//Jump
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+		{
+			if (on_ground == true)
+			{
+				y_val = -25;
+				this->sprite.move(0, y_val);
+				on_ground = false;
+
+			}
+			this->sprite.move(x_val, 0);
+			this->animState = PLAYER_ANIMATION_STATES::JUMPING;
+		}
+		collisionMap(map_data);
+		centerEntityOnMap(map_data);
 	}
 	if (come_back_time > 0) {
 		come_back_time--;
@@ -103,6 +111,27 @@ void Player::updateMovement(Map& map_data)
 			y_val = 0;
 		}
 	}
+}
+
+void Player::centerEntityOnMap(Map& map_data)
+{
+	int MAX_WIDTH = size.width;
+	int MAX_HEIGHT = size.height;
+	map_data.start_x = x_pos - (MAX_WIDTH / 2.0);
+	if (map_data.start_x < 0)
+	{
+		map_data.start_x = 0;
+	}
+	else if (map_data.start_x + MAX_WIDTH >= map_data.max_x)
+	{
+		map_data.start_x = map_data.max_x - MAX_WIDTH;
+	}
+
+	/*map_data.start_y = y_pos - (MAX_HEIGHT / 2);
+	if (map_data.start_y + MAX_HEIGHT >= map_data.max_y)
+	{
+		map_data.start_y = map_data.max_y - MAX_HEIGHT;
+	}*/
 }
 
 void Player::updateAnimation()
@@ -179,16 +208,6 @@ void Player::updateAnimation()
 		this->sprite.setScale(-1.f, 1.f);
 		this->sprite.setOrigin(this->sprite.getGlobalBounds().width / 1.f, 0.f);
 	}
-
-	/*else if (this->animState == PLAYER_ANIMATION_STATES::JUMPING)
-	{
-		if (on_ground == false)
-		{
-			this->currentFrame.top = 96;
-			this->currentFrame.left = 35.5f;
-			this->sprite.setTextureRect(this->currentFrame);
-		}
-	}*/
 }
 
 void Player::collisionMap(Map& map_data)
@@ -284,7 +303,7 @@ void Player::collisionMap(Map& map_data)
 
 void Player::update(Map& map_data)
 {
-	this->sprite.setPosition(x_pos, y_pos);
+	this->sprite.setPosition(x_pos - mapX, y_pos - mapY);
 	this->updateMovement(map_data);
 	this->updateAnimation();
 }

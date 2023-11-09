@@ -12,6 +12,11 @@ void Enemy::initVariables()
 	y_pos = 0;
 	on_ground = 0;
 	come_back_time = 0;
+
+	animationA = 0;
+	animationB = 0;
+	input_type.left = 0;
+	type_move = MOVE_IN_SPACE;
 }
 
 void Enemy::initTexture() 
@@ -25,7 +30,7 @@ void Enemy::initTexture()
 void Enemy::initSprite()
 {
 	this->sprite.setTexture(this->textureSheet);
-	this->frame = sf::IntRect(0, 0, 61, 47);
+	this->frame = sf::IntRect(0, 0, 55, 47);
 	this->sprite.setTextureRect(this->frame);
 	this->sprite.setScale(1.f, 1.f);
 }
@@ -60,6 +65,15 @@ void Enemy::doPlayer(Map& gmap)
 			y_val = ENEMY_MAX_FALL_SPEED;
 		}
 
+		if (input_type.left == 1)
+		{
+			x_val -= SPEED_ENEMY;
+		}
+		else if (input_type.right == 1)
+		{
+			x_val += SPEED_ENEMY;
+		}
+
 		collisionMap(gmap);
 	}
 	else if (come_back_time > 0)
@@ -72,6 +86,8 @@ void Enemy::doPlayer(Map& gmap)
 			if (x_pos > 256)
 			{
 				x_pos -= 256;
+				animationA -= 256;
+				animationB -= 256;
 			}
 			else
 			{
@@ -79,6 +95,7 @@ void Enemy::doPlayer(Map& gmap)
 			}
 			y_pos = 0;
 			come_back_time = 0;
+			input_type.left = 1;
 		}
 	}
 }
@@ -177,11 +194,63 @@ void Enemy::collisionMap(Map& gmap)
 
 void Enemy::update()
 {
-	//this->sprite.move(this->speed, 0.f);
 }
 
 void Enemy::render(sf::RenderTarget& target)
 {
-	this->sprite.setPosition(x_pos, y_pos);
-	target.draw(this->sprite);
+	if (come_back_time == 0)
+	{
+		this->sprite.setPosition(x_pos, y_pos);
+		target.draw(this->sprite);
+	}
 }
+
+
+void Enemy::impMoveType(sf::RenderTarget& target)
+{
+	if (on_ground == true)
+	{
+		if (x_pos > animationB)
+		{
+			input_type.left = 1;
+			input_type.right = 0;
+			if (!this->textureSheet.loadFromFile("PNG_file/Mushroom.png"))
+			{
+				std::cout << "ERROR LOAD IMGE";
+			}
+			this->sprite.setTexture(this->textureSheet);
+			this->frame = sf::IntRect(0, 0, 55, 47);
+			this->sprite.setTextureRect(this->frame);
+			this->sprite.setScale(1.f, 1.f);
+
+		}
+		else if (x_pos < animationA)
+		{
+			input_type.left = 0;
+			input_type.right = 1;
+			if (!this->textureSheet.loadFromFile("PNG_file/Mushroom.png"))
+			{
+				std::cout << "ERROR LOAD IMGE";
+			}
+			this->sprite.setTexture(this->textureSheet);
+			this->frame = sf::IntRect(67, 0, 55, 47);
+			this->sprite.setTextureRect(this->frame);
+			this->sprite.setScale(1.f, 1.f);
+		}
+	}
+	else
+	{
+		if (input_type.left == 1)
+		{
+			if (!this->textureSheet.loadFromFile("PNG_file/Mushroom.png"))
+			{
+				std::cout << "ERROR LOAD IMGE";
+			}
+			this->sprite.setTexture(this->textureSheet);
+			this->frame = sf::IntRect(0, 0, 55, 47);
+			this->sprite.setTextureRect(this->frame);
+			this->sprite.setScale(1.f, 1.f);
+		}
+	}
+}
+
