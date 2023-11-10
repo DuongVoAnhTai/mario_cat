@@ -45,6 +45,15 @@ void Game::initEnemies() {
 	this->enemy_list = listEnemy();
 }
 
+void Game::initMusic() {
+	if (!buffer.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
+		// Error handling
+		cout << "error!" << endl;
+	}
+
+	sound.setBuffer(buffer);
+}
+
 Game::Game()
 {
 	this->initVariables();
@@ -53,6 +62,7 @@ Game::Game()
 	this->initMap();
 	this->initPlayer();
 	this->initEnemies();
+	this->initMusic();
 }
 
 Game::~Game()
@@ -191,4 +201,6 @@ void Game::render()
 
 	//Draw
 	this->window->display();
+
+	sound.play();
 }

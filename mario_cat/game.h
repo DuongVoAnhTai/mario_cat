@@ -11,6 +11,8 @@ private:
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
 
 	//BackGr
 	sf::Sprite BackGr;
@@ -34,6 +36,7 @@ private:
 	void initMap();
 	void initPlayer();
 	void initEnemies();
+	void initMusic();
 
 public:
 	//Constructor
