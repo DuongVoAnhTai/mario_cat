@@ -9,7 +9,6 @@ class Enemy
 private:
 	sf::Sprite sprite;
 	sf::Texture textureSheet;
-
 	sf::IntRect frame;
 
 	bool on_ground;
@@ -63,6 +62,8 @@ public:
 	void set_type_move(const int& typeMove) { type_move = typeMove; }
 	void setAnimation(const int& pos_a, const int& pos_b) { animationA = pos_a; animationB = pos_b; }
 	void set_input_left(const int& ipLeft) { input_type.left = ipLeft; }
+
+	sf::FloatRect getRect();
 	void impMoveType(sf::RenderTarget& target);
 	//void impMoveType
 

@@ -58,6 +58,9 @@ public:
 	void collisionMap(Map& map_data);
 	void setMapXY(const int& map_x, const int& map_y) { mapX = map_x; mapY = map_y; }
 	void centerEntityOnMap(Map& map_data);
+	void setComeBackTime(const int& cbTime) { come_back_time = cbTime; }
+	void setRect(const int& xPos, const int& yPos) { x_pos = xPos; y_pos = yPos; };
+	sf::FloatRect getRect();
 
 	void update(Map& map_data);
 	void render(sf::RenderTarget& target); //ve 1 anh len man hinh

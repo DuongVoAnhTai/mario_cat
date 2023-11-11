@@ -22,9 +22,9 @@ private:
 	//Player
 	Map map_data;
 	Player* player;
+	int num_die;
 
 	//Enemies
-	//Enemy* enemy;
 	vector<Enemy*> enemy_list;
 
 	//Private function
