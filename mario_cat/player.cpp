@@ -5,6 +5,22 @@
 void Player::initVariables()
 {
 	this->animState = PLAYER_ANIMATION_STATES::IDLE;
+	x_val = 0;
+	y_val = 0;
+
+	x_pos = 0;
+	y_pos = 0;
+
+	come_back_time = 0;
+
+	on_ground = false;
+
+	mapX = 0;
+	mapY = 0;
+
+	//this->bound = sprite.getGlobalBounds();
+
+	this->size = sf::VideoMode::getDesktopMode();
 }
 
 void Player::initTexture()
@@ -30,21 +46,6 @@ void Player::initSprite()
 
 Player::Player()
 {
-	x_val = 0;
-	y_val = 0;
-
-	x_pos = 0;
-	y_pos = 0;
-
-	come_back_time = 0;
-
-	on_ground = false;
-
-	mapX = 0;
-	mapY = 0;
-
-	this->size = sf::VideoMode::getDesktopMode();
-
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
@@ -299,6 +300,13 @@ void Player::collisionMap(Map& map_data)
 	if (y_pos > map_data.max_y) {
 		come_back_time = 60;
 	}
+}
+
+sf::FloatRect Player::getRect()
+{
+	sf::FloatRect bound;
+	bound = sprite.getGlobalBounds();
+	return bound;
 }
 
 void Player::update(Map& map_data)

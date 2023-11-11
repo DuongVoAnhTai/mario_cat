@@ -5,6 +5,7 @@
 void Game::initVariables()
 {
 	this->window = nullptr;
+	this->num_die = 0;
 }
 
 void Game::initWindow()
@@ -151,6 +152,30 @@ void Game::updateEnemies()
 			p_enemy->impMoveType(*this->window);
 			p_enemy->doPlayer(map_data);
 			p_enemy->render(*this->window);
+
+			sf::FloatRect rect_player = player->getRect();
+			sf::FloatRect rect_enemy = p_enemy->getRect();
+			bool coll = globalFunc::CheckCollision(rect_player, rect_enemy);
+			if (coll)
+			{
+				num_die++;
+				cout << num_die << " ";
+				if (num_die <= 3)
+				{
+					player->setRect(0, 0);
+					this->updatePlayer();
+					player->setComeBackTime(60);
+					sf::sleep(sf::seconds(1));
+					continue;
+				}
+				else
+				{
+					cout << "Die";
+					this->window->close();
+					return;
+
+				}
+			}
 		}
 	}
 }

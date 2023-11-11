@@ -17,6 +17,7 @@ void Enemy::initVariables()
 	animationB = 0;
 	input_type.left = 0;
 	type_move = MOVE_IN_SPACE;
+
 }
 
 void Enemy::initTexture() 
@@ -254,3 +255,9 @@ void Enemy::impMoveType(sf::RenderTarget& target)
 	}
 }
 
+sf::FloatRect Enemy::getRect()
+{
+	sf::FloatRect bound;
+	bound = sprite.getGlobalBounds();
+	return bound;
+}

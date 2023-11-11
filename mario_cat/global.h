@@ -34,3 +34,8 @@ struct Input {
 	int right;
 	int jump;
 };
+
+namespace globalFunc
+{
+	bool CheckCollision(const sf::FloatRect& object1, const sf::FloatRect& object2);
+}
