@@ -9,6 +9,7 @@ int main()
 	//game loop
 	while (game.running())
 	{
+		game.music();
 		//update
 		game.update();
 

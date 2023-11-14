@@ -199,6 +199,12 @@ void Game::pollEvent() {
 	}
 }
 
+void Game::music()
+{
+	sound.play();
+}
+
+
 void Game::update()
 {
 	this->pollEvent();
@@ -227,5 +233,4 @@ void Game::render()
 	//Draw
 	this->window->display();
 
-	sound.play();
 }

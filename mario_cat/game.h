@@ -63,6 +63,7 @@ public:
 
 	//Function
 	void pollEvent();
+	void music();
 	void update();
 	void render();
 };

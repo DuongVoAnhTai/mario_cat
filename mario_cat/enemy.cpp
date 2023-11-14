@@ -201,7 +201,7 @@ void Enemy::render(sf::RenderTarget& target)
 {
 	if (come_back_time == 0)
 	{
-		this->sprite.setPosition(x_pos, y_pos);
+		this->sprite.setPosition(x_pos - map_x, y_pos - map_y);
 		target.draw(this->sprite);
 	}
 }
