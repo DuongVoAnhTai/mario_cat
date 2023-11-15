@@ -116,9 +116,9 @@ void Game::renderPlayer()
 vector <Enemy*> Game::listEnemy()
 {
 	vector<Enemy*> list_enemy;
-	Enemy* enemy_obj = new Enemy[30];
+	Enemy* enemy_obj = new Enemy[20];
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
@@ -160,7 +160,7 @@ void Game::updateEnemies()
 			{
 				num_die++;
 				cout << num_die << " ";
-				if (num_die <= 3)
+				if (num_die <= 2)
 				{
 					player->setRect(0, 0);
 					this->updatePlayer();
