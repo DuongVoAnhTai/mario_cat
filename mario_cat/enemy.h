@@ -7,14 +7,14 @@
 class Enemy
 {
 private:
+	//Print image
 	sf::Sprite sprite;
 	sf::Texture textureSheet;
 	sf::IntRect frame;
 
+	//Variables
 	bool on_ground;
 	int come_back_time;
-	/*int width_frame;
-	int height_frame;*/
 	float x_pos;
 	float y_pos;
 	float x_val;
@@ -22,6 +22,7 @@ private:
 	int map_x;
 	int map_y;
 
+	//Move
 	int type_move;
 	int animationA;
 	int animationB;
@@ -43,9 +44,6 @@ public:
 	};
 
 	//Function
-	/*int get_width_frame() { return width_frame; }
-	int get_height_frame() { return height_frame; }*/
-
 	void set_x_val(const float& xVal) { x_val = xVal; }
 	void set_y_val(const float& yVal) { y_val = yVal; }
 
@@ -56,17 +54,19 @@ public:
 
 	void setMapXY(const int& mp_x, const int& mp_y) { map_x = mp_x; map_y = mp_y; }
 
+	//Collision Map
 	void doPlayer(Map& gmap);	
 	void collisionMap(Map& gmap);
 
+	//Move
 	void set_type_move(const int& typeMove) { type_move = typeMove; }
 	void setAnimation(const int& pos_a, const int& pos_b) { animationA = pos_a; animationB = pos_b; }
 	void set_input_left(const int& ipLeft) { input_type.left = ipLeft; }
 
 	sf::FloatRect getRect();
 	void impMoveType(sf::RenderTarget& target);
-	//void impMoveType
 
+	//Render
 	void update();
 	void render(sf::RenderTarget& target);
 };

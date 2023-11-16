@@ -11,13 +11,11 @@ GameMap::GameMap()
 	game_map.file_name = nullptr;
 
 	this->size = sf::VideoMode::getDesktopMode();
-	//this->tileSheet = NULL;
-	//this->tile_mat = new TileMat[MAX_TILE];
 }
 
 GameMap::~GameMap() 
 { 
-	//delete[] this->tile_mat;
+
 }
 
 void GameMap::loadMap(char* name)
@@ -28,9 +26,6 @@ void GameMap::loadMap(char* name)
 	{
 		return;
 	}
-
-	/*game_map.max_x = 0;
-	game_map.max_y = 0;*/
 
 	for (int i = 0; i < MAX_Y; i++)
 	{
@@ -55,9 +50,6 @@ void GameMap::loadMap(char* name)
 
 	game_map.max_x = (game_map.max_x + 1) * TILE_SIZE;
 	game_map.max_y = (game_map.max_y + 1) * TILE_SIZE;
-
-	/*game_map.start_x = 0;
-	game_map.start_y = 0;*/
 
 	game_map.file_name = name;
 	fclose(fp);
@@ -94,10 +86,12 @@ void GameMap::render(sf::RenderTarget& target)
 	int map_x = 0;
 	int map_y = 0;
 
+	//Give posion current of map
 	map_x = game_map.start_x / TILE_SIZE;
 	x1 = (game_map.start_x % TILE_SIZE) * -1;
 	x2 = x1 + this->size.width + (x1 == 0 ? 0 : TILE_SIZE);
 
+	//Give posion current of map
 	map_y = game_map.start_y / TILE_SIZE;
 	y1 = (game_map.start_y % TILE_SIZE) * -1;
 	y2 = y1 + this->size.height + (y1 == 0 ? 0 : TILE_SIZE);
@@ -110,7 +104,6 @@ void GameMap::render(sf::RenderTarget& target)
 			if ((map_x >= 0 && map_x < MAX_X) && (map_y >= 0 && map_y < MAX_Y))
 			{
 				int val = game_map.tile[map_y][map_x];
-					//cout << val << endl;
 				if (val > 0)
 				{
 					tile_mat[val].setRect(j, i);

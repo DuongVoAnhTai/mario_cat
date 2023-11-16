@@ -127,12 +127,6 @@ void Player::centerEntityOnMap(Map& map_data)
 	{
 		map_data.start_x = map_data.max_x - MAX_WIDTH;
 	}
-
-	/*map_data.start_y = y_pos - (MAX_HEIGHT / 2);
-	if (map_data.start_y + MAX_HEIGHT >= map_data.max_y)
-	{
-		map_data.start_y = map_data.max_y - MAX_HEIGHT;
-	}*/
 }
 
 void Player::updateAnimation()

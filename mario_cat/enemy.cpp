@@ -4,8 +4,6 @@
 //Core
 void Enemy::initVariables()
 {
-	/*width_frame = 0;
-	height_frame = 0;*/
 	x_val = 0;
 	y_val = 0;
 	x_pos = 0;
