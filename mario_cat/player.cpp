@@ -30,7 +30,7 @@ void Player::initTexture()
 {
 	if (!this->textureSheet.loadFromFile("PNG_file/Cat.png"))
 	{
-		std::cout << "ERROR LOAD IMAGE";
+		std::cout << "ERROR LOAD IMAGE" << std::endl;
 	}
 }
 
@@ -47,12 +47,29 @@ void Player::initSprite()
 	this->sprite.setScale(sf::Vector2f(1.f, 1.f)); //set lai ti le cua hinh anh
 }
 
+void Player::initMusic()
+{
+	if (!buffer2.loadFromFile("./MUSIC_File/powerup.mp3")) {
+		// Error handling
+		cout << "error!" << endl;
+	}
+
+	if (!buffer3.loadFromFile("./MUSIC_File/jump.mp3")) {
+		// Error handling
+		cout << "error!" << endl;
+	}
+
+	sound2.setBuffer(buffer2);
+	sound3.setBuffer(buffer3);
+}
+
 Player::Player()
 {
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
 	this->initAnimation();
+	this->initMusic();
 }
 
 Player::~Player()
@@ -77,9 +94,11 @@ void Player::updateMovement(Map& map_data)
 		//Left
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
+			sound2.play();
 			x_val -= PLAYER_SPEED;
 			this->sprite.move(x_val, 0.f);
 			this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
+			
 		}
 
 		//Right
@@ -88,6 +107,7 @@ void Player::updateMovement(Map& map_data)
 			x_val += PLAYER_SPEED;
 			this->sprite.move(x_val, 0.f);
 			this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
+			sound2.play();
 		}
 
 		//Jump
@@ -95,6 +115,7 @@ void Player::updateMovement(Map& map_data)
 		{
 			if (on_ground == true)
 			{
+				sound3.play();
 				y_val = -25;
 				this->sprite.move(0, y_val);
 				on_ground = false;
@@ -431,3 +452,4 @@ void Player::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite); //ve len man hinh
 }
+

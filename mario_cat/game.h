@@ -11,8 +11,12 @@ private:
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
-	sf::SoundBuffer buffer;
-	sf::Sound sound;
+	sf::SoundBuffer buffer1;
+	sf::SoundBuffer buffer2;
+	sf::Sound sound1;
+	sf::Sound sound2;
+	sf::SoundBuffer testBuffer;
+	sf::Sound testSound;
 
 	//BackGr
 	sf::Sprite BackGr;

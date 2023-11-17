@@ -28,6 +28,11 @@ private:
 	sf::Texture textureSheet;
 	sf::Clock animationTimer;
 	sf::VideoMode size;
+	sf::SoundBuffer buffer2;
+	sf::SoundBuffer buffer3;
+	sf::Sound sound2;
+	sf::Sound sound3;
+
 	//Variables
 	float x_val;
 	float y_val;
@@ -55,6 +60,7 @@ private:
 	void initTexture();
 	void initSprite();
 	void initAnimation();
+	void initMusic();
 
 public:
 	Player(/*float pos_x, float pos_y*/);
@@ -81,4 +87,6 @@ public:
 	//Render
 	void update(Map& map_data);
 	void render(sf::RenderTarget& target); //ve 1 anh len man hinh
+
+	void handleInput(char key);
 };

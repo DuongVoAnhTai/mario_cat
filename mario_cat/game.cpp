@@ -57,12 +57,18 @@ void Game::initEnemies() {
 }
 
 void Game::initMusic() {
-	if (!buffer.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
+	if (!buffer1.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
 		// Error handling
 		cout << "error!" << endl;
 	}
 
-	sound.setBuffer(buffer);
+	if (!testBuffer.loadFromFile("./MUSIC_File/Pswitch.mp3")) {
+		cout << "error!" << endl;
+	}
+	testSound.setBuffer(testBuffer);
+
+	sound1.setBuffer(buffer1);
+	
 }
 
 Game::Game()
@@ -279,7 +285,8 @@ void Game::pollEvent() {
 
 void Game::music()
 {
-	sound.play();
+	sound1.play();
+	
 }
 
 
@@ -298,7 +305,7 @@ void Game::render()
 		- tao doi tuong
 		- ve len man hinh
 	*/
-
+	
 	this->window->clear();
 
 	this->renderBackGr();
@@ -314,4 +321,6 @@ void Game::render()
 
 	//Point in game
 	this->mark_value += 1;
+
+	
 }
