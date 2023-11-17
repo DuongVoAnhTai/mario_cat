@@ -38,6 +38,11 @@ void Game::initBackGr() {
 void Game::initMap()
 {
 	char name[] = "PNG_file/map.txt";
+
+	//Map ban đầu:
+	this->originalMap.loadMap(name);
+
+	//Map hiện tại
 	this->map.loadMap(name);
 	this->map.update();
 }
@@ -134,6 +139,8 @@ void Game::updatePlayer()
 		player->setHeart(life);
 		if (life > 0)
 		{
+			this->map_data = originalMap.getMap();
+			this->map.setMap(map_data);
 			player->setRect(0, 0);
 			this->updatePlayer();
 			player->setComeBackTime(60);
