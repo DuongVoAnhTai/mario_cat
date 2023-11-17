@@ -24,7 +24,14 @@ private:
 	//Player
 	Map map_data;
 	Player* player;
-	int num_die;
+
+	//Point
+	int mark_value;
+	int last_value;
+	vector<int> scores;
+	ofstream outputFile;
+	ofstream diem;
+	ifstream inputFile;
 
 	//Enemies
 	vector<Enemy*> enemy_list;
@@ -52,6 +59,9 @@ public:
 	//Map
 	void renderMap();
 
+	//Sort
+	void bubbleSort(vector<int>& arr);
+
 	//Player
 	void updatePlayer();
 	void renderPlayer();
@@ -63,6 +73,7 @@ public:
 
 	//Function
 	void pollEvent();
+	void music();
 	void update();
 	void render();
 };

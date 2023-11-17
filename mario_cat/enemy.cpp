@@ -4,8 +4,6 @@
 //Core
 void Enemy::initVariables()
 {
-	/*width_frame = 0;
-	height_frame = 0;*/
 	x_val = 0;
 	y_val = 0;
 	x_pos = 0;
@@ -134,6 +132,17 @@ void Enemy::collisionMap(Map& gmap)
 				x_pos = x2 * TILE_SIZE;
 				x_pos -= this->frame.width + 1;
 				x_val = 0;
+				input_type.right = 0;
+				input_type.left = 1;
+				//x_val -= SPEED_ENEMY;
+				if (!this->textureSheet.loadFromFile("PNG_file/Mushroom.png"))
+				{
+					std::cout << "ERROR LOAD IMGE";
+				}
+				this->sprite.setTexture(this->textureSheet);
+				this->frame = sf::IntRect(0, 0, 55, 47);
+				this->sprite.setTextureRect(this->frame);
+				this->sprite.setScale(1.f, 1.f);
 			}
 		}
 		else if (x_val < 0) //Moving left
@@ -142,6 +151,17 @@ void Enemy::collisionMap(Map& gmap)
 			{
 				x_pos = (x1 + 1) * TILE_SIZE;
 				x_val = 0;
+				input_type.left = 0;
+				input_type.right = 1;
+				//x_val += SPEED_ENEMY;
+				if (!this->textureSheet.loadFromFile("PNG_file/Mushroom.png"))
+				{
+					std::cout << "ERROR LOAD IMGE";
+				}
+				this->sprite.setTexture(this->textureSheet);
+				this->frame = sf::IntRect(67, 0, 55, 47);
+				this->sprite.setTextureRect(this->frame);
+				this->sprite.setScale(1.f, 1.f);
 			}
 		}
 	}
@@ -201,7 +221,7 @@ void Enemy::render(sf::RenderTarget& target)
 {
 	if (come_back_time == 0)
 	{
-		this->sprite.setPosition(x_pos, y_pos);
+		this->sprite.setPosition(x_pos - map_x, y_pos - map_y);
 		target.draw(this->sprite);
 	}
 }

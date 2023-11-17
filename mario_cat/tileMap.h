@@ -6,6 +6,7 @@
 class GameMap
 {
 private:
+	//Variables
 	Map game_map;
 	TileMat tile_mat[MAX_TILE];
 	sf::Texture* tileSheet;
@@ -15,10 +16,12 @@ public:
 	GameMap();
 	~GameMap();
 
+	//Coliison map
 	void loadMap(char* name);
 	Map getMap() const { return game_map; }
 	void setMap(Map& map_data) { game_map = map_data; }
 
+	//Render
 	void update();
 	void render(sf::RenderTarget& target);
 };

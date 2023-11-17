@@ -5,7 +5,13 @@
 void Game::initVariables()
 {
 	this->window = nullptr;
-	this->num_die = 0;
+	this->mark_value = 0;
+	this->last_value = 0;
+	this->outputFile.open("Diem.txt", ios::app);
+	if (!outputFile.is_open())
+	{
+		cerr << "Không thể mở tệp tin." << endl;
+	}
 }
 
 void Game::initWindow()
@@ -99,6 +105,21 @@ void Game::renderMap()
 	this->map.render(*this->window);
 }
 
+void Game::bubbleSort(vector<int>& arr)
+{
+	int n = arr.size();
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = 0; j < n - i - 1; j++)
+		{
+			if (arr[j] < arr[j + 1])
+			{
+				swap(arr[j], arr[j + 1]);
+			}
+		}
+	}
+}
+
 //Player
 void Game::updatePlayer()
 {
@@ -116,9 +137,9 @@ void Game::renderPlayer()
 vector <Enemy*> Game::listEnemy()
 {
 	vector<Enemy*> list_enemy;
-	Enemy* enemy_obj = new Enemy[30];
+	Enemy* enemy_obj = new Enemy[20];
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
@@ -158,9 +179,11 @@ void Game::updateEnemies()
 			bool coll = globalFunc::CheckCollision(rect_player, rect_enemy);
 			if (coll)
 			{
-				num_die++;
-				cout << num_die << " ";
-				if (num_die <= 3)
+				//Die
+				int life = player->getHeart();
+				life--;
+				player->setHeart(life);
+				if (life > 0)
 				{
 					player->setRect(0, 0);
 					this->updatePlayer();
@@ -170,10 +193,38 @@ void Game::updateEnemies()
 				}
 				else
 				{
+					//Save file and sort file
+					this->last_value = this->mark_value;
+					this->mark_value = 0;
+					outputFile << last_value << endl;
 					cout << "Die";
 					this->window->close();
-					return;
+					outputFile.close();
 
+					inputFile.open("Diem.txt");
+					if (inputFile.is_open())
+					{
+						int score;
+						while (inputFile >> score)
+							scores.push_back(score);
+						inputFile.close();
+						bubbleSort(scores);
+
+						diem.open("Sap_xep.txt");
+						if (diem.is_open())
+						{
+							for (const int& score : scores)
+							{
+								diem << score << endl;
+							}
+							diem.close();
+						}
+					}
+					else
+					{
+						std::cerr << "Không thể mở tệp đầu vào." << endl;
+					}
+					return;
 				}
 			}
 		}
@@ -195,15 +246,23 @@ void Game::pollEvent() {
 		if (this->ev.type == sf::Event::KeyPressed && this->ev.key.code == sf::Keyboard::Escape) 
 		{
 			this->window->close();
+			outputFile.close();
 		}
 	}
 }
+
+void Game::music()
+{
+	sound.play();
+}
+
 
 void Game::update()
 {
 	this->pollEvent();
 
 	this->updatePlayer();
+
 }
 
 void Game::render()
@@ -227,5 +286,6 @@ void Game::render()
 	//Draw
 	this->window->display();
 
-	sound.play();
+	//Point in game
+	this->mark_value += 1;
 }

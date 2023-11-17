@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <fstream>
 using namespace std;
 
 //SFML
@@ -29,12 +30,14 @@ struct Map
 	char* file_name;
 };
 
+//Move state
 struct Input {
 	int left;
 	int right;
 	int jump;
 };
 
+//Check collison
 namespace globalFunc
 {
 	bool CheckCollision(const sf::FloatRect& object1, const sf::FloatRect& object2);
