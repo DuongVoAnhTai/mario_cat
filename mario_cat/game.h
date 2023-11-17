@@ -24,7 +24,6 @@ private:
 	//Player
 	Map map_data;
 	Player* player;
-	int num_die;
 
 	//Point
 	int mark_value;

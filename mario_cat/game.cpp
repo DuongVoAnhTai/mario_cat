@@ -5,7 +5,6 @@
 void Game::initVariables()
 {
 	this->window = nullptr;
-	this->num_die = 0;
 	this->mark_value = 0;
 	this->last_value = 0;
 	this->outputFile.open("Diem.txt", ios::app);
@@ -181,8 +180,10 @@ void Game::updateEnemies()
 			if (coll)
 			{
 				//Die
-				num_die++;
-				if (num_die <= 2)
+				int life = player->getHeart();
+				life--;
+				player->setHeart(life);
+				if (life > 0)
 				{
 					player->setRect(0, 0);
 					this->updatePlayer();
@@ -261,6 +262,7 @@ void Game::update()
 	this->pollEvent();
 
 	this->updatePlayer();
+
 }
 
 void Game::render()

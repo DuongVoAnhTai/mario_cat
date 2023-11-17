@@ -5,6 +5,12 @@
 #define MAX_FALL_SPEED 10
 #define PLAYER_SPEED 6
 
+#define TP_BLOCK 8
+#define LUCKY_BLOCK 7
+#define CHECK_POINT 12
+
+#define range 12
+
 enum PLAYER_ANIMATION_STATES
 {
 	IDLE = 0, //trang thai player khong tuong tac
@@ -29,6 +35,8 @@ private:
 
 	float x_pos;
 	float y_pos;
+
+	int heart;
 
 	int come_back_time;
 
@@ -63,6 +71,10 @@ public:
 	void centerEntityOnMap(Map& map_data);
 	void setComeBackTime(const int& cbTime) { come_back_time = cbTime; }
 	void setRect(const int& xPos, const int& yPos) { x_pos = xPos; y_pos = yPos; };
+
+	//Heart
+	int getHeart() { return heart; }
+	void setHeart(int heart) { this->heart = heart; }
 
 	//Give bound to check collision
 	sf::FloatRect getRect();
