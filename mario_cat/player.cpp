@@ -1,5 +1,6 @@
 ﻿#include "global.h"
 #include"player.h"
+#include "game.h"
 #include <cstdlib>
 
 void Player::initVariables()
@@ -11,7 +12,7 @@ void Player::initVariables()
 	x_pos = 0;
 	y_pos = 0;
 
-	heart = 2;
+	heart = 3;
 
 	come_back_time = 0;
 
@@ -409,9 +410,7 @@ void Player::collisionMap(Map& map_data)
 		x_pos = map_data.max_x - this->currentFrame.width - 1;
 	}
 
-	if (y_pos > map_data.max_y) {
-		come_back_time = 60;
-	}
+	//if (y_pos > map_data.max_y) {}
 }
 
 sf::FloatRect Player::getRect()

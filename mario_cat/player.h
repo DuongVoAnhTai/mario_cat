@@ -28,7 +28,6 @@ private:
 	sf::Texture textureSheet;
 	sf::Clock animationTimer;
 	sf::VideoMode size;
-
 	//Variables
 	float x_val;
 	float y_val;

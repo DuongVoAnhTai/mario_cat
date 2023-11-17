@@ -32,7 +32,6 @@ void Game::initBackGr() {
 		static_cast<float>(this->window->getSize().x) / this->BackGr.getGlobalBounds().width,
 		static_cast<float>(this->window->getSize().y) / this->BackGr.getGlobalBounds().height
 	);
-	//cout << this->window->getSize().y;
 }
 
 //Map
@@ -126,6 +125,26 @@ void Game::updatePlayer()
 	this->map_data = map.getMap();
 	this->player->setMapXY(map_data.start_x, map_data.start_y);
 	this->player->update(this->map_data);
+
+	//Khi rớt xuống vực
+	if (this->player->getRect().top >= map_data.max_y)
+	{
+		int life = player->getHeart();
+		life--;
+		player->setHeart(life);
+		if (life > 0)
+		{
+			player->setRect(0, 0);
+			this->updatePlayer();
+			player->setComeBackTime(60);
+			sf::sleep(sf::seconds(1));
+		}
+		else
+		{
+			cout << "Die";
+			this->window->close();
+		}
+	}
 }
 
 void Game::renderPlayer()

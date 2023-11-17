@@ -20,6 +20,7 @@ private:
 
 	//Map
 	GameMap map;
+	GameMap originalMap;
 
 	//Player
 	Map map_data;
@@ -75,5 +76,5 @@ public:
 	void pollEvent();
 	void music();
 	void update();
-	void render();
+	void render(); 
 };
