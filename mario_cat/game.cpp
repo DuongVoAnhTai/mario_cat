@@ -57,18 +57,27 @@ void Game::initEnemies() {
 }
 
 void Game::initMusic() {
-	if (!buffer1.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
-		// Error handling
+	if (!buffer1.loadFromFile("./MUSIC_File/gameover.mp3")) {
+		
 		cout << "error!" << endl;
 	}
 
-	if (!testBuffer.loadFromFile("./MUSIC_File/Pswitch.mp3")) {
-		cout << "error!" << endl;
-	}
-	testSound.setBuffer(testBuffer);
+	
 
 	sound1.setBuffer(buffer1);
 	
+}
+
+void Game::initBackgroundMusic() {
+	if (!backgroundMusic.openFromFile("./MUSIC_File/nhacnenmario.ogg")) {
+		std::cerr << "Error loading background music!" << std::endl;
+	}
+}
+
+void Game::initGameOverMusic() {
+	if (!gameOverMusic.openFromFile("./MUSIC_File/gameover.mp3")) {
+		std::cerr << "Error loading game over music!" << std::endl;
+	}
 }
 
 Game::Game()
@@ -80,6 +89,8 @@ Game::Game()
 	this->initPlayer();
 	this->initEnemies();
 	this->initMusic();
+	this->initBackgroundMusic();
+	this->initGameOverMusic();
 }
 
 Game::~Game()
@@ -156,6 +167,10 @@ void Game::updatePlayer()
 		{
 			cout << "Die";
 			this->window->close();
+
+			if (gameOverMusic.getStatus() != sf::Music::Playing) {
+				gameOverMusic.play();
+			}
 		}
 	}
 }
@@ -287,6 +302,11 @@ void Game::pollEvent() {
 
 void Game::music()
 {
+	sound1.play();
+	if (backgroundMusic.getStatus() != sf::Music::Playing) {
+		backgroundMusic.play();
+	}
+	
 	sound1.play();
 	
 }

@@ -49,17 +49,14 @@ void Player::initSprite()
 
 void Player::initMusic()
 {
-	if (!buffer2.loadFromFile("./MUSIC_File/powerup.mp3")) {
-		// Error handling
-		cout << "error!" << endl;
-	}
+	
 
 	if (!buffer3.loadFromFile("./MUSIC_File/jump.mp3")) {
 		// Error handling
 		cout << "error!" << endl;
 	}
 
-	sound2.setBuffer(buffer2);
+	
 	sound3.setBuffer(buffer3);
 }
 
