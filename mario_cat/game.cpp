@@ -257,8 +257,8 @@ void Game::updateEnemies()
 						while (inputFile >> score)
 							scores.push_back(score);
 						inputFile.close();
-						bubbleSort(scores);
 
+						bubbleSort(scores);
 						diem.open("Sap_xep.txt");
 						if (diem.is_open())
 						{
