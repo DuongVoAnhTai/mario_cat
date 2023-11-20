@@ -281,14 +281,6 @@ void Game::updateEnemies()
 }
 
 void Game::renderEnemies()
-{
-	this->updateEnemies();
-
-	//this->enemy->render(*this->window);
-}
-
-//Function
-void Game::pollEvent() {
 
 	while (this->window->pollEvent(this->ev)) 
 	{
@@ -312,6 +304,14 @@ void Game::music()
 }
 
 
+{
+	this->updateEnemies();
+
+	//this->enemy->render(*this->window);
+}
+
+//Function
+void Game::pollEvent() {
 void Game::update()
 {
 	this->pollEvent();
