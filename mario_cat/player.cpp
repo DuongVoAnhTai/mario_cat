@@ -91,11 +91,9 @@ void Player::updateMovement(Map& map_data)
 		//Left
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			sound2.play();
 			x_val -= PLAYER_SPEED;
 			this->sprite.move(x_val, 0.f);
 			this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
-			
 		}
 
 		//Right
@@ -104,7 +102,6 @@ void Player::updateMovement(Map& map_data)
 			x_val += PLAYER_SPEED;
 			this->sprite.move(x_val, 0.f);
 			this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
-			sound2.play();
 		}
 
 		//Jump
@@ -113,7 +110,7 @@ void Player::updateMovement(Map& map_data)
 			if (on_ground == true)
 			{
 				sound3.play();
-				y_val = -25;
+				y_val = -20;
 				this->sprite.move(0, y_val);
 				on_ground = false;
 
@@ -234,6 +231,8 @@ void Player::collisionMap(Map& map_data)
 	int y1 = 0;
 	int y2 = 0;
 
+	short count = 1;
+
 	// Sinh số ngẫu nhiên trong khoảng 1 đến range
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	int random_Value = std::rand() % range + 1;
@@ -261,12 +260,28 @@ void Player::collisionMap(Map& map_data)
 			int val1 = map_data.tile[y1][x2];
 			int val2 = map_data.tile[y2][x2];
 			//Đưa người chơi về đầu map khi va chạm vào block TP và check point
-			if (val1 == TP_BLOCK || val2 == TP_BLOCK || val1 == CHECK_POINT || val2 == CHECK_POINT)
+			if (val1 == TP_BLOCK || val2 == TP_BLOCK)
 			{
 				x_pos = 0;
 				y_pos = 0;
 			}
-			
+
+			else if (val1 == 19 || val2 == 19)
+			{
+				x_val -= PLAYER_SPEED * 100;
+				this->sprite.move(x_val, 0.f);
+			}
+
+			else if (val1 == WALL || val2 == WALL)
+			{
+				map_data.tile[y1][x2] = 1;
+				map_data.tile[y2][x2] = 1;
+			}
+
+			else if (val1 == 20 || val2 == 20)
+			{
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0) //Neu o do ko phai so 0
@@ -288,7 +303,11 @@ void Player::collisionMap(Map& map_data)
 				x_pos = 0;
 				y_pos = 0;
 			}
-			
+
+			else if (val1 == 20 || val2 == 20)
+			{
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0)
@@ -321,7 +340,65 @@ void Player::collisionMap(Map& map_data)
 				x_pos = 0;
 				y_pos = 0;
 			}
-			
+
+			else if (val1 == INVISIBLE_JUMP_UP || val2 == INVISIBLE_JUMP_UP)
+			{
+				y_val = -30;
+				this->sprite.move(0, y_val);
+			}
+
+			else if (val1 == JUMP_UP || val2 == JUMP_UP)
+			{
+				y_val = -28;
+				this->sprite.move(0, y_val);
+			}
+
+			else if (val1 == 20 || val2 == 20)
+			{
+				//mat me block tang hinh:
+				map_data.tile[y2 - 1][x1] = 0;
+				map_data.tile[y2 - 1][x2] = 0;
+				map_data.tile[y2 - 2][x1] = 0;
+				map_data.tile[y2 - 2][x2] = 0;
+				map_data.tile[y2 - 3][x1] = 0;
+				map_data.tile[y2 - 3][x2] = 0;
+				map_data.tile[y2 - 4][x1] = 0;
+				map_data.tile[y2 - 4][x2] = 0;
+				map_data.tile[y2 - 5][x1] = 0;
+				map_data.tile[y2 - 5][x2] = 0;
+				map_data.tile[y2 - 6][x1] = 0;
+				map_data.tile[y2 - 6][x2] = 0;
+				map_data.tile[y2 - 7][x1] = 0;
+				map_data.tile[y2 - 7][x2] = 0;
+				map_data.tile[y2 - 8][x1] = 0;
+				map_data.tile[y2 - 9][x2] = 0;
+				//Left
+				map_data.tile[y2][x1 - 5] = 1;
+				map_data.tile[y2 - 1][x1 - 5] = 1;
+				map_data.tile[y2 - 2][x1 - 5] = 1;
+				map_data.tile[y2 - 3][x1 - 5] = 1;
+				//Top
+				map_data.tile[y2 - 4][x1 - 4] = 1;
+				map_data.tile[y2 - 4][x1 - 3] = 1;
+				map_data.tile[y2 - 4][x1 - 2] = 1;
+				map_data.tile[y2 - 4][x1 - 1] = 1;
+				map_data.tile[y2 - 4][x1 - 0] = 1;
+				map_data.tile[y2 - 4][x1 + 1] = 1;
+				map_data.tile[y2 - 4][x1 + 2] = 1;
+				map_data.tile[y2 - 4][x1 + 3] = 1;
+				map_data.tile[y2 - 4][x1 + 4] = 1;
+				map_data.tile[y2 - 4][x1 + 5] = 1;
+				map_data.tile[y2 - 4][x1 + 6] = 1;
+				//Right
+				map_data.tile[y2][x2 + 6] = 1;
+				map_data.tile[y2 - 1][x2 + 6] = 1;
+				map_data.tile[y2 - 2][x2 + 6] = 1;
+				map_data.tile[y2 - 3][x2 + 6] = 1;
+
+				map_data.tile[y2][x1] = 0;
+				map_data.tile[y2][x2] = 0;
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0)
@@ -344,6 +421,7 @@ void Player::collisionMap(Map& map_data)
 				x_pos = 0;
 				y_pos = 0;
 			}
+
 			else if (val1 == LUCKY_BLOCK || val2 == LUCKY_BLOCK)
 			{
 				//LUCKY BLOCK va chạm khi ngươi chơi nhảy lên:
@@ -378,7 +456,7 @@ void Player::collisionMap(Map& map_data)
 
 				if (random_Value >= 7 && random_Value <= 9)
 				{
-					for (int i = 0; i <= 4; i++)
+					for (int i = 0; i <= 20; i++)
 					{
 						map_data.tile[20 - i][x1] = 0;
 						map_data.tile[20 - i][x2] = 0;
@@ -389,7 +467,7 @@ void Player::collisionMap(Map& map_data)
 						map_data.tile[20 - i][x1 - 3] = 0;
 						map_data.tile[20 - i][x2 - 3] = 0;
 					}
-					for (int i = 0; i <= 4; i++)
+					for (int i = 0; i <= 20; i++)
 					{
 						map_data.tile[20 - i][x1] = 0;
 						map_data.tile[20 - i][x2] = 0;

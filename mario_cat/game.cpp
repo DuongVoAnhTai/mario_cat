@@ -184,15 +184,15 @@ void Game::renderPlayer()
 vector <Enemy*> Game::listEnemy()
 {
 	vector<Enemy*> list_enemy;
-	Enemy* enemy_obj = new Enemy[20];
+	Enemy* enemy_obj = new Enemy[22];
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 22; i++)
 	{
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
 		{
 			p_threat->set_type_move(Enemy::MOVE_IN_SPACE);
-			p_threat->set_x_pos(700 + i * 1200);
+			p_threat->set_x_pos(700 + i * 930);
 			p_threat->set_y_pos(250);
 
 			int pos1 = p_threat->get_x_pos() - 120;
@@ -232,6 +232,8 @@ void Game::updateEnemies()
 				player->setHeart(life);
 				if (life > 0)
 				{
+					this->map_data = originalMap.getMap();
+					this->map.setMap(map_data);
 					player->setRect(0, 0);
 					this->updatePlayer();
 					player->setComeBackTime(60);
@@ -255,8 +257,8 @@ void Game::updateEnemies()
 						while (inputFile >> score)
 							scores.push_back(score);
 						inputFile.close();
-						bubbleSort(scores);
 
+						bubbleSort(scores);
 						diem.open("Sap_xep.txt");
 						if (diem.is_open())
 						{

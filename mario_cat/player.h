@@ -8,6 +8,10 @@
 #define TP_BLOCK 8
 #define LUCKY_BLOCK 7
 #define CHECK_POINT 12
+#define INVISIBLE_BLOCK 14
+#define INVISIBLE_JUMP_UP 15
+#define JUMP_UP 16
+#define WALL 17
 
 #define range 12
 
