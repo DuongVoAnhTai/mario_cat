@@ -9,7 +9,7 @@ void Player::initVariables()
 	x_val = 0;
 	y_val = 0;
 
-	x_pos = 0;
+	x_pos = 500 * 10;
 	y_pos = 0;
 
 	heart = 3;
@@ -355,10 +355,15 @@ void Player::collisionMap(Map& map_data)
 				y_val = -28;
 				this->sprite.move(0, y_val);
 			}
+			
+			else if (val1 == 9 || val2 == 9)
+			{
+				y_pos = map_data.max_y;
+			}
 
 			else if (val1 == 20 || val2 == 20)
 			{
-				//mat me block tang hinh:
+				//Hide invisible block
 				map_data.tile[y2 - 1][x1] = 0;
 				map_data.tile[y2 - 1][x2] = 0;
 				map_data.tile[y2 - 2][x1] = 0;
@@ -397,6 +402,8 @@ void Player::collisionMap(Map& map_data)
 				map_data.tile[y2 - 1][x2 + 6] = 1;
 				map_data.tile[y2 - 2][x2 + 6] = 1;
 				map_data.tile[y2 - 3][x2 + 6] = 1;
+
+				map_data.tile[y2 + 1][x1 - 4] = 9;
 
 				map_data.tile[y2][x1] = 0;
 				map_data.tile[y2][x2] = 0;
