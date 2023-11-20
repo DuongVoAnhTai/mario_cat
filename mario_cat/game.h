@@ -17,6 +17,8 @@ private:
 	sf::Sound sound2;
 	sf::SoundBuffer testBuffer;
 	sf::Sound testSound;
+	sf::Music backgroundMusic;
+	sf::Music gameOverMusic;
 
 	//BackGr
 	sf::Sprite BackGr;
@@ -49,7 +51,9 @@ private:
 	void initPlayer();
 	void initEnemies();
 	void initMusic();
-
+	void initBackgroundMusic();
+	void initGameOverMusic();
+    
 public:
 	//Constructor
 	Game();
