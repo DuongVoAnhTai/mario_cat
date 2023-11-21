@@ -15,15 +15,6 @@
 
 #define range 12
 
-enum PLAYER_ANIMATION_STATES
-{
-	IDLE = 0, //trang thai player khong tuong tac
-	MOVING_LEFT,
-	MOVING_RIGHT,
-	JUMPING,
-	DIE
-};
-
 class Player
 {
 private:
@@ -44,11 +35,10 @@ private:
 	float x_pos;
 	float y_pos;
 
-	int heart;
-
 	int come_back_time;
 
 	bool on_ground;
+	bool win;
 
 	int mapX;
 	int mapY;
@@ -67,12 +57,24 @@ private:
 	void initMusic();
 
 public:
+
+enum PLAYER_ANIMATION_STATES
+{
+	IDLE = 0, //trang thai player khong tuong tac
+	MOVING_LEFT,
+	MOVING_RIGHT,
+	JUMPING,
+	WIN
+};
+
 	Player(/*float pos_x, float pos_y*/);
 	virtual ~Player();
 
 	//Function
 	void updateAnimation();
 	void updateMovement(Map& map_data);
+	short getAnimStates() { return this->animState; }
+	short getWin() { return win; }
 
 	//Collision Map
 	void collisionMap(Map& map_data);
@@ -80,10 +82,6 @@ public:
 	void centerEntityOnMap(Map& map_data);
 	void setComeBackTime(const int& cbTime) { come_back_time = cbTime; }
 	void setRect(const int& xPos, const int& yPos) { x_pos = xPos; y_pos = yPos; };
-
-	//Heart
-	int getHeart() { return heart; }
-	void setHeart(int heart) { this->heart = heart; }
 
 	//Give bound to check collision
 	sf::FloatRect getRect();

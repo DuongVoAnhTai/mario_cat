@@ -22,6 +22,10 @@ private:
 	sf::Sprite BackGr;
 	sf::Texture BackGrText;
 
+	//Win Screen
+	sf::Sprite WinScr;
+	sf::Texture WinScrText;
+
 	//Map
 	GameMap map;
 	GameMap originalMap;
@@ -45,6 +49,7 @@ private:
 	void initVariables();
 	void initWindow();
 	void initBackGr();
+	void initWinScr();
 	void initMap();
 	void initPlayer();
 	void initEnemies();
@@ -60,6 +65,9 @@ public:
 
 	//Background
 	void renderBackGr();
+
+	//Win Screen
+	void renderWinScr();
 
 	//Map
 	void renderMap();
