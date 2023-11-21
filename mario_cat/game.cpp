@@ -75,9 +75,19 @@ void Game::initMusic() {
 		cout << "error!" << endl;
 	}
 
-	
+	if (!buffer3.loadFromFile("./MUSIC_File/thaygiaoba.mp3")) {
+
+		cout << "error!" << endl;
+	}
+
+	if (!buffer4.loadFromFile("./MUSIC_File/vitas.mp3")) {
+
+		cout << "error!" << endl;
+	}
 
 	sound1.setBuffer(buffer1);
+	sound3.setBuffer(buffer3);
+	sound4.setBuffer(buffer4);
 	
 }
 
@@ -172,6 +182,7 @@ void Game::updatePlayer()
 	{
 		if (this->player->getAnimStates() != this->player->WIN)
 		{
+			sound3.play();
 			this->map_data = originalMap.getMap();
 			this->map.setMap(map_data);
 			player->setRect(0, 0);
@@ -268,6 +279,7 @@ void Game::updateEnemies()
 			{
 				if (this->player->getAnimStates() != this->player->WIN)
 				{
+					sound3.play();
 					this->map_data = originalMap.getMap();
 					this->map.setMap(map_data);
 					player->setRect(0, 0);
@@ -336,7 +348,7 @@ void Game::pollEvent() {
 
 void Game::music()
 {
-	sound1.play();
+	
 	if (backgroundMusic.getStatus() != sf::Music::Playing) {
 		backgroundMusic.play();
 	}
@@ -367,6 +379,7 @@ void Game::render()
 
 	if (!player->getWin())
 	{
+		sound1.play();
 		this->renderBackGr();
 
 		this->renderPlayer();
@@ -378,7 +391,10 @@ void Game::render()
 	}
 	else
 	{
+		
 		this->renderWinScr();
+		backgroundMusic.stop();
+		
 	}
 		//Draw
 		this->window->display();

@@ -9,7 +9,7 @@ void Player::initVariables()
 	x_val = 0;
 	y_val = 0;
 
-	x_pos = 0;
+	x_pos = 500*25;
 	y_pos = 0;
 
 	come_back_time = 0;
@@ -55,8 +55,13 @@ void Player::initMusic()
 		cout << "error!" << endl;
 	}
 
+	if (!buffer4.loadFromFile("./MUSIC_File/vitas.mp3")) {
+		// Error handling
+		cout << "error!" << endl;
+	}
 	
 	sound3.setBuffer(buffer3);
+	sound4.setBuffer(buffer4);
 }
 
 Player::Player()
@@ -382,6 +387,8 @@ void Player::collisionMap(Map& map_data)
 				win = true;
 				x_pos = 0;
 				y_pos = 0;
+				
+				sound4.play();
 			}
 
 			else if (val1 == 20 || val2 == 20)

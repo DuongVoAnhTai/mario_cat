@@ -13,8 +13,12 @@ private:
 	sf::Event ev;
 	sf::SoundBuffer buffer1;
 	sf::SoundBuffer buffer2;
+	sf::SoundBuffer buffer3;
+	sf::SoundBuffer buffer4;
 	sf::Sound sound1;
 	sf::Sound sound2;
+	sf::Sound sound3;
+	sf::Sound sound4;
 	sf::SoundBuffer testBuffer;
 	sf::Sound testSound;
 	sf::Music backgroundMusic;

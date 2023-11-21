@@ -25,8 +25,10 @@ private:
 	sf::VideoMode size;
 	sf::SoundBuffer buffer2;
 	sf::SoundBuffer buffer3;
+	sf::SoundBuffer buffer4;
 	sf::Sound sound2;
 	sf::Sound sound3;
+	sf::Sound sound4;
 
 	//Variables
 	float x_val;
