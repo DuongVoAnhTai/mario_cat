@@ -1,5 +1,6 @@
 ﻿#include "global.h"
 #include"player.h"
+#include "game.h"
 #include <cstdlib>
 
 void Player::initVariables()
@@ -8,10 +9,10 @@ void Player::initVariables()
 	x_val = 0;
 	y_val = 0;
 
-	x_pos = 0;
+	x_pos = 500 * 10;
 	y_pos = 0;
 
-	heart = 2;
+	heart = 3;
 
 	come_back_time = 0;
 
@@ -29,7 +30,7 @@ void Player::initTexture()
 {
 	if (!this->textureSheet.loadFromFile("PNG_file/Cat.png"))
 	{
-		std::cout << "ERROR LOAD IMAGE";
+		std::cout << "ERROR LOAD IMAGE" << std::endl;
 	}
 }
 
@@ -46,12 +47,26 @@ void Player::initSprite()
 	this->sprite.setScale(sf::Vector2f(1.f, 1.f)); //set lai ti le cua hinh anh
 }
 
+void Player::initMusic()
+{
+	
+
+	if (!buffer3.loadFromFile("./MUSIC_File/jump.mp3")) {
+		// Error handling
+		cout << "error!" << endl;
+	}
+
+	
+	sound3.setBuffer(buffer3);
+}
+
 Player::Player()
 {
 	this->initVariables();
 	this->initTexture();
 	this->initSprite();
 	this->initAnimation();
+	this->initMusic();
 }
 
 Player::~Player()
@@ -94,7 +109,8 @@ void Player::updateMovement(Map& map_data)
 		{
 			if (on_ground == true)
 			{
-				y_val = -25;
+				sound3.play();
+				y_val = -20;
 				this->sprite.move(0, y_val);
 				on_ground = false;
 
@@ -215,6 +231,8 @@ void Player::collisionMap(Map& map_data)
 	int y1 = 0;
 	int y2 = 0;
 
+	short count = 1;
+
 	// Sinh số ngẫu nhiên trong khoảng 1 đến range
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 	int random_Value = std::rand() % range + 1;
@@ -242,12 +260,28 @@ void Player::collisionMap(Map& map_data)
 			int val1 = map_data.tile[y1][x2];
 			int val2 = map_data.tile[y2][x2];
 			//Đưa người chơi về đầu map khi va chạm vào block TP và check point
-			if (val1 == TP_BLOCK || val2 == TP_BLOCK || val1 == CHECK_POINT || val2 == CHECK_POINT)
+			if (val1 == TP_BLOCK || val2 == TP_BLOCK)
 			{
 				x_pos = 0;
 				y_pos = 0;
 			}
-			
+
+			else if (val1 == 19 || val2 == 19)
+			{
+				x_val -= PLAYER_SPEED * 100;
+				this->sprite.move(x_val, 0.f);
+			}
+
+			else if (val1 == WALL || val2 == WALL)
+			{
+				map_data.tile[y1][x2] = 1;
+				map_data.tile[y2][x2] = 1;
+			}
+
+			else if (val1 == 20 || val2 == 20)
+			{
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0) //Neu o do ko phai so 0
@@ -269,7 +303,11 @@ void Player::collisionMap(Map& map_data)
 				x_pos = 0;
 				y_pos = 0;
 			}
-			
+
+			else if (val1 == 20 || val2 == 20)
+			{
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0)
@@ -302,7 +340,72 @@ void Player::collisionMap(Map& map_data)
 				x_pos = 0;
 				y_pos = 0;
 			}
+
+			else if (val1 == INVISIBLE_JUMP_UP || val2 == INVISIBLE_JUMP_UP)
+			{
+				y_val = -30;
+				this->sprite.move(0, y_val);
+			}
+
+			else if (val1 == JUMP_UP || val2 == JUMP_UP)
+			{
+				y_val = -28;
+				this->sprite.move(0, y_val);
+			}
 			
+			else if (val1 == 9 || val2 == 9)
+			{
+				y_pos = map_data.max_y;
+			}
+
+			else if (val1 == 20 || val2 == 20)
+			{
+				//Hide invisible block
+				map_data.tile[y2 - 1][x1] = 0;
+				map_data.tile[y2 - 1][x2] = 0;
+				map_data.tile[y2 - 2][x1] = 0;
+				map_data.tile[y2 - 2][x2] = 0;
+				map_data.tile[y2 - 3][x1] = 0;
+				map_data.tile[y2 - 3][x2] = 0;
+				map_data.tile[y2 - 4][x1] = 0;
+				map_data.tile[y2 - 4][x2] = 0;
+				map_data.tile[y2 - 5][x1] = 0;
+				map_data.tile[y2 - 5][x2] = 0;
+				map_data.tile[y2 - 6][x1] = 0;
+				map_data.tile[y2 - 6][x2] = 0;
+				map_data.tile[y2 - 7][x1] = 0;
+				map_data.tile[y2 - 7][x2] = 0;
+				map_data.tile[y2 - 8][x1] = 0;
+				map_data.tile[y2 - 9][x2] = 0;
+				//Left
+				map_data.tile[y2][x1 - 5] = 1;
+				map_data.tile[y2 - 1][x1 - 5] = 1;
+				map_data.tile[y2 - 2][x1 - 5] = 1;
+				map_data.tile[y2 - 3][x1 - 5] = 1;
+				//Top
+				map_data.tile[y2 - 4][x1 - 4] = 1;
+				map_data.tile[y2 - 4][x1 - 3] = 1;
+				map_data.tile[y2 - 4][x1 - 2] = 1;
+				map_data.tile[y2 - 4][x1 - 1] = 1;
+				map_data.tile[y2 - 4][x1 - 0] = 1;
+				map_data.tile[y2 - 4][x1 + 1] = 1;
+				map_data.tile[y2 - 4][x1 + 2] = 1;
+				map_data.tile[y2 - 4][x1 + 3] = 1;
+				map_data.tile[y2 - 4][x1 + 4] = 1;
+				map_data.tile[y2 - 4][x1 + 5] = 1;
+				map_data.tile[y2 - 4][x1 + 6] = 1;
+				//Right
+				map_data.tile[y2][x2 + 6] = 1;
+				map_data.tile[y2 - 1][x2 + 6] = 1;
+				map_data.tile[y2 - 2][x2 + 6] = 1;
+				map_data.tile[y2 - 3][x2 + 6] = 1;
+
+				map_data.tile[y2 + 1][x1 - 4] = 9;
+
+				map_data.tile[y2][x1] = 0;
+				map_data.tile[y2][x2] = 0;
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0)
@@ -325,6 +428,7 @@ void Player::collisionMap(Map& map_data)
 				x_pos = 0;
 				y_pos = 0;
 			}
+
 			else if (val1 == LUCKY_BLOCK || val2 == LUCKY_BLOCK)
 			{
 				//LUCKY BLOCK va chạm khi ngươi chơi nhảy lên:
@@ -359,7 +463,7 @@ void Player::collisionMap(Map& map_data)
 
 				if (random_Value >= 7 && random_Value <= 9)
 				{
-					for (int i = 0; i <= 4; i++)
+					for (int i = 0; i <= 20; i++)
 					{
 						map_data.tile[20 - i][x1] = 0;
 						map_data.tile[20 - i][x2] = 0;
@@ -370,7 +474,7 @@ void Player::collisionMap(Map& map_data)
 						map_data.tile[20 - i][x1 - 3] = 0;
 						map_data.tile[20 - i][x2 - 3] = 0;
 					}
-					for (int i = 0; i <= 4; i++)
+					for (int i = 0; i <= 20; i++)
 					{
 						map_data.tile[20 - i][x1] = 0;
 						map_data.tile[20 - i][x2] = 0;
@@ -409,9 +513,7 @@ void Player::collisionMap(Map& map_data)
 		x_pos = map_data.max_x - this->currentFrame.width - 1;
 	}
 
-	if (y_pos > map_data.max_y) {
-		come_back_time = 60;
-	}
+	//if (y_pos > map_data.max_y) {}
 }
 
 sf::FloatRect Player::getRect()
@@ -432,3 +534,4 @@ void Player::render(sf::RenderTarget& target)
 {
 	target.draw(this->sprite); //ve len man hinh
 }
+

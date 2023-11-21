@@ -8,6 +8,10 @@
 #define TP_BLOCK 8
 #define LUCKY_BLOCK 7
 #define CHECK_POINT 12
+#define INVISIBLE_BLOCK 14
+#define INVISIBLE_JUMP_UP 15
+#define JUMP_UP 16
+#define WALL 17
 
 #define range 12
 
@@ -28,6 +32,10 @@ private:
 	sf::Texture textureSheet;
 	sf::Clock animationTimer;
 	sf::VideoMode size;
+	sf::SoundBuffer buffer2;
+	sf::SoundBuffer buffer3;
+	sf::Sound sound2;
+	sf::Sound sound3;
 
 	//Variables
 	float x_val;
@@ -56,6 +64,7 @@ private:
 	void initTexture();
 	void initSprite();
 	void initAnimation();
+	void initMusic();
 
 public:
 	Player(/*float pos_x, float pos_y*/);
@@ -82,4 +91,6 @@ public:
 	//Render
 	void update(Map& map_data);
 	void render(sf::RenderTarget& target); //ve 1 anh len man hinh
+
+	void handleInput(char key);
 };

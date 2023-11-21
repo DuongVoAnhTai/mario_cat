@@ -1,7 +1,7 @@
 #pragma once
 #include "tile.h"
 
-#define MAX_TILE 20
+#define MAX_TILE 30
 
 class GameMap
 {

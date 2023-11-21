@@ -32,13 +32,17 @@ void Game::initBackGr() {
 		static_cast<float>(this->window->getSize().x) / this->BackGr.getGlobalBounds().width,
 		static_cast<float>(this->window->getSize().y) / this->BackGr.getGlobalBounds().height
 	);
-	//cout << this->window->getSize().y;
 }
 
 //Map
 void Game::initMap()
 {
 	char name[] = "PNG_file/map.txt";
+
+	//Map ban đầu:
+	this->originalMap.loadMap(name);
+
+	//Map hiện tại
 	this->map.loadMap(name);
 	this->map.update();
 }
@@ -53,12 +57,27 @@ void Game::initEnemies() {
 }
 
 void Game::initMusic() {
-	if (!buffer.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
-		// Error handling
+	if (!buffer1.loadFromFile("./MUSIC_File/gameover.mp3")) {
+		
 		cout << "error!" << endl;
 	}
 
-	sound.setBuffer(buffer);
+	
+
+	sound1.setBuffer(buffer1);
+	
+}
+
+void Game::initBackgroundMusic() {
+	if (!backgroundMusic.openFromFile("./MUSIC_File/nhacnenmario.ogg")) {
+		std::cerr << "Error loading background music!" << std::endl;
+	}
+}
+
+void Game::initGameOverMusic() {
+	if (!gameOverMusic.openFromFile("./MUSIC_File/gameover.mp3")) {
+		std::cerr << "Error loading game over music!" << std::endl;
+	}
 }
 
 Game::Game()
@@ -70,6 +89,8 @@ Game::Game()
 	this->initPlayer();
 	this->initEnemies();
 	this->initMusic();
+	this->initBackgroundMusic();
+	this->initGameOverMusic();
 }
 
 Game::~Game()
@@ -126,6 +147,32 @@ void Game::updatePlayer()
 	this->map_data = map.getMap();
 	this->player->setMapXY(map_data.start_x, map_data.start_y);
 	this->player->update(this->map_data);
+
+	//Khi rớt xuống vực
+	if (this->player->getRect().top >= map_data.max_y)
+	{
+		int life = player->getHeart();
+		life--;
+		player->setHeart(life);
+		if (life > 0)
+		{
+			this->map_data = originalMap.getMap();
+			this->map.setMap(map_data);
+			player->setRect(0, 0);
+			this->updatePlayer();
+			player->setComeBackTime(60);
+			sf::sleep(sf::seconds(1));
+		}
+		else
+		{
+			cout << "Die";
+			this->window->close();
+
+			if (gameOverMusic.getStatus() != sf::Music::Playing) {
+				gameOverMusic.play();
+			}
+		}
+	}
 }
 
 void Game::renderPlayer()
@@ -137,15 +184,15 @@ void Game::renderPlayer()
 vector <Enemy*> Game::listEnemy()
 {
 	vector<Enemy*> list_enemy;
-	Enemy* enemy_obj = new Enemy[20];
+	Enemy* enemy_obj = new Enemy[22];
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 22; i++)
 	{
 		Enemy* p_threat = (enemy_obj + i);
 		if (p_threat != NULL)
 		{
 			p_threat->set_type_move(Enemy::MOVE_IN_SPACE);
-			p_threat->set_x_pos(700 + i * 1200);
+			p_threat->set_x_pos(700 + i * 930);
 			p_threat->set_y_pos(250);
 
 			int pos1 = p_threat->get_x_pos() - 120;
@@ -185,6 +232,8 @@ void Game::updateEnemies()
 				player->setHeart(life);
 				if (life > 0)
 				{
+					this->map_data = originalMap.getMap();
+					this->map.setMap(map_data);
 					player->setRect(0, 0);
 					this->updatePlayer();
 					player->setComeBackTime(60);
@@ -208,8 +257,8 @@ void Game::updateEnemies()
 						while (inputFile >> score)
 							scores.push_back(score);
 						inputFile.close();
-						bubbleSort(scores);
 
+						bubbleSort(scores);
 						diem.open("Sap_xep.txt");
 						if (diem.is_open())
 						{
@@ -232,14 +281,6 @@ void Game::updateEnemies()
 }
 
 void Game::renderEnemies()
-{
-	this->updateEnemies();
-
-	//this->enemy->render(*this->window);
-}
-
-//Function
-void Game::pollEvent() {
 
 	while (this->window->pollEvent(this->ev)) 
 	{
@@ -253,10 +294,24 @@ void Game::pollEvent() {
 
 void Game::music()
 {
-	sound.play();
+	sound1.play();
+	if (backgroundMusic.getStatus() != sf::Music::Playing) {
+		backgroundMusic.play();
+	}
+	
+	sound1.play();
+	
 }
 
 
+{
+	this->updateEnemies();
+
+	//this->enemy->render(*this->window);
+}
+
+//Function
+void Game::pollEvent() {
 void Game::update()
 {
 	this->pollEvent();
@@ -272,7 +327,7 @@ void Game::render()
 		- tao doi tuong
 		- ve len man hinh
 	*/
-
+	
 	this->window->clear();
 
 	this->renderBackGr();
@@ -288,4 +343,6 @@ void Game::render()
 
 	//Point in game
 	this->mark_value += 1;
+
+	
 }

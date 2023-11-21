@@ -11,8 +11,14 @@ private:
 	sf::RenderWindow* window;
 	sf::VideoMode videoMode;
 	sf::Event ev;
-	sf::SoundBuffer buffer;
-	sf::Sound sound;
+	sf::SoundBuffer buffer1;
+	sf::SoundBuffer buffer2;
+	sf::Sound sound1;
+	sf::Sound sound2;
+	sf::SoundBuffer testBuffer;
+	sf::Sound testSound;
+	sf::Music backgroundMusic;
+	sf::Music gameOverMusic;
 
 	//BackGr
 	sf::Sprite BackGr;
@@ -20,6 +26,7 @@ private:
 
 	//Map
 	GameMap map;
+	GameMap originalMap;
 
 	//Player
 	Map map_data;
@@ -44,7 +51,9 @@ private:
 	void initPlayer();
 	void initEnemies();
 	void initMusic();
-
+	void initBackgroundMusic();
+	void initGameOverMusic();
+    
 public:
 	//Constructor
 	Game();
@@ -75,5 +84,5 @@ public:
 	void pollEvent();
 	void music();
 	void update();
-	void render();
+	void render(); 
 };
