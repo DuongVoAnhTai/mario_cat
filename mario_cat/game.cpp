@@ -294,8 +294,6 @@ void Game::updateEnemies()
 					this->last_value = this->mark_value;
 					this->mark_value = 0;
 					outputFile << last_value << endl;
-					cout << "Die";
-					this->window->close();
 					outputFile.close();
 
 					inputFile.open("Diem.txt");

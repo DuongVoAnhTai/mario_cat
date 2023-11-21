@@ -295,6 +295,7 @@ void Player::collisionMap(Map& map_data)
 				win = true;
 				x_pos = 0;
 				y_pos = 0;
+				sound4.play();
 			}
 
 			else
@@ -329,6 +330,7 @@ void Player::collisionMap(Map& map_data)
 				win = true;
 				x_pos = 0;
 				y_pos = 0;
+				sound4.play();
 			}
 
 			else
@@ -366,6 +368,7 @@ void Player::collisionMap(Map& map_data)
 
 			else if (val1 == INVISIBLE_JUMP_UP || val2 == INVISIBLE_JUMP_UP)
 			{
+				sound3.play();
 				y_val = -30;
 				this->sprite.move(0, y_val);
 			}
@@ -387,7 +390,6 @@ void Player::collisionMap(Map& map_data)
 				win = true;
 				x_pos = 0;
 				y_pos = 0;
-				
 				sound4.play();
 			}
 
