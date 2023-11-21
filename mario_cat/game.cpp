@@ -70,12 +70,8 @@ void Game::initEnemies() {
 }
 
 void Game::initMusic() {
-	if (!buffer1.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
-		// Error handling
-		cout << "error!" << endl;
-	}
-
-	if (!testBuffer.loadFromFile("./MUSIC_File/Pswitch.mp3")) {
+	if (!buffer1.loadFromFile("./MUSIC_File/gameover.mp3")) {
+		
 		cout << "error!" << endl;
 	}
 
@@ -280,6 +276,41 @@ void Game::updateEnemies()
 					sf::sleep(sf::seconds(1));
 					continue;
 				}
+				else
+				{
+					//Save file and sort file
+					this->last_value = this->mark_value;
+					this->mark_value = 0;
+					outputFile << last_value << endl;
+					cout << "Die";
+					this->window->close();
+					outputFile.close();
+
+					inputFile.open("Diem.txt");
+					if (inputFile.is_open())
+					{
+						int score;
+						while (inputFile >> score)
+							scores.push_back(score);
+						inputFile.close();
+
+						bubbleSort(scores);
+						diem.open("Sap_xep.txt");
+						if (diem.is_open())
+						{
+							for (const int& score : scores)
+							{
+								diem << score << endl;
+							}
+							diem.close();
+						}
+					}
+					else
+					{
+						std::cerr << "Không thể mở tệp đầu vào." << endl;
+					}
+					return;
+				}
 			}
 		}
 	}
@@ -314,6 +345,7 @@ void Game::music()
 	
 }
 
+//Function
 
 void Game::update()
 {
@@ -354,5 +386,4 @@ void Game::render()
 	//Point in game
 	this->mark_value += 1;
 
-	
 }
