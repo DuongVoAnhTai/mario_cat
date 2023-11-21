@@ -34,6 +34,19 @@ void Game::initBackGr() {
 	);
 }
 
+//Win Screen
+void Game::initWinScr() {
+	if (!this->WinScrText.loadFromFile("PNG_file/WinScreen.png")) {
+		cout << "Win Screen ERROR";
+	}
+	this->WinScr.setTexture(this->WinScrText);
+
+	this->WinScr.setScale(
+		static_cast<float>(this->window->getSize().x) / this->WinScr.getGlobalBounds().width,
+		static_cast<float>(this->window->getSize().y) / this->WinScr.getGlobalBounds().height
+	);
+}
+
 //Map
 void Game::initMap()
 {
@@ -57,8 +70,12 @@ void Game::initEnemies() {
 }
 
 void Game::initMusic() {
-	if (!buffer1.loadFromFile("./MUSIC_File/gameover.mp3")) {
-		
+	if (!buffer1.loadFromFile("./MUSIC_File/nhacnenmario.ogg")) {
+		// Error handling
+		cout << "error!" << endl;
+	}
+
+	if (!testBuffer.loadFromFile("./MUSIC_File/Pswitch.mp3")) {
 		cout << "error!" << endl;
 	}
 
@@ -85,6 +102,7 @@ Game::Game()
 	this->initVariables();
 	this->initWindow();
 	this->initBackGr();
+	this->initWinScr();
 	this->initMap();
 	this->initPlayer();
 	this->initEnemies();
@@ -121,6 +139,11 @@ void Game::renderBackGr()
 	this->window->draw(this->BackGr);
 }
 
+void Game::renderWinScr()
+{
+	this->window->draw(this->WinScr);
+}
+
 void Game::renderMap()
 {
 	this->map.render(*this->window);
@@ -151,10 +174,7 @@ void Game::updatePlayer()
 	//Khi rớt xuống vực
 	if (this->player->getRect().top >= map_data.max_y)
 	{
-		int life = player->getHeart();
-		life--;
-		player->setHeart(life);
-		if (life > 0)
+		if (this->player->getAnimStates() != this->player->WIN)
 		{
 			this->map_data = originalMap.getMap();
 			this->map.setMap(map_data);
@@ -163,15 +183,39 @@ void Game::updatePlayer()
 			player->setComeBackTime(60);
 			sf::sleep(sf::seconds(1));
 		}
-		else
+	}
+	if (this->player->getAnimStates() == this->player->WIN)
+	{
+		//Save file and sort file
+		this->last_value = this->mark_value;
+		this->mark_value = 0;
+		outputFile << last_value << endl;
+		outputFile.close();
+		
+		inputFile.open("Diem.txt");
+		if (inputFile.is_open())
 		{
-			cout << "Die";
-			this->window->close();
+			int score;
+			while (inputFile >> score)
+				scores.push_back(score);
+			inputFile.close();
+			bubbleSort(scores);
 
-			if (gameOverMusic.getStatus() != sf::Music::Playing) {
-				gameOverMusic.play();
+			diem.open("Sap_xep.txt");
+			if (diem.is_open())
+			{
+				for (const int& score : scores)
+				{
+					diem << score << endl;
+				}
+				diem.close();
 			}
 		}
+		else
+		{
+			std::cerr << "Không thể mở tệp đầu vào." << endl;
+		}
+		return;
 	}
 }
 
@@ -226,11 +270,7 @@ void Game::updateEnemies()
 			bool coll = globalFunc::CheckCollision(rect_player, rect_enemy);
 			if (coll)
 			{
-				//Die
-				int life = player->getHeart();
-				life--;
-				player->setHeart(life);
-				if (life > 0)
+				if (this->player->getAnimStates() != this->player->WIN)
 				{
 					this->map_data = originalMap.getMap();
 					this->map.setMap(map_data);
@@ -240,47 +280,18 @@ void Game::updateEnemies()
 					sf::sleep(sf::seconds(1));
 					continue;
 				}
-				else
-				{
-					//Save file and sort file
-					this->last_value = this->mark_value;
-					this->mark_value = 0;
-					outputFile << last_value << endl;
-					cout << "Die";
-					this->window->close();
-					outputFile.close();
-
-					inputFile.open("Diem.txt");
-					if (inputFile.is_open())
-					{
-						int score;
-						while (inputFile >> score)
-							scores.push_back(score);
-						inputFile.close();
-
-						bubbleSort(scores);
-						diem.open("Sap_xep.txt");
-						if (diem.is_open())
-						{
-							for (const int& score : scores)
-							{
-								diem << score << endl;
-							}
-							diem.close();
-						}
-					}
-					else
-					{
-						std::cerr << "Không thể mở tệp đầu vào." << endl;
-					}
-					return;
-				}
 			}
 		}
 	}
 }
 
 void Game::renderEnemies()
+{
+	this->updateEnemies();
+}
+
+//Function
+void Game::pollEvent() {
 
 	while (this->window->pollEvent(this->ev)) 
 	{
@@ -304,14 +315,6 @@ void Game::music()
 }
 
 
-{
-	this->updateEnemies();
-
-	//this->enemy->render(*this->window);
-}
-
-//Function
-void Game::pollEvent() {
 void Game::update()
 {
 	this->pollEvent();
@@ -330,16 +333,23 @@ void Game::render()
 	
 	this->window->clear();
 
-	this->renderBackGr();
-	
-	this->renderPlayer();
-	map.setMap(map_data);
-	this->renderMap();
+	if (!player->getWin())
+	{
+		this->renderBackGr();
 
-	this->renderEnemies();
+		this->renderPlayer();
+		map.setMap(map_data);
+		this->renderMap();
 
-	//Draw
-	this->window->display();
+		this->renderEnemies();
+
+	}
+	else
+	{
+		this->renderWinScr();
+	}
+		//Draw
+		this->window->display();
 
 	//Point in game
 	this->mark_value += 1;

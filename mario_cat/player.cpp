@@ -9,14 +9,13 @@ void Player::initVariables()
 	x_val = 0;
 	y_val = 0;
 
-	x_pos = 500 * 10;
+	x_pos = 500 * 25;
 	y_pos = 0;
-
-	heart = 3;
 
 	come_back_time = 0;
 
 	on_ground = false;
+	win = false;
 
 	mapX = 0;
 	mapY = 0;
@@ -88,35 +87,38 @@ void Player::updateMovement(Map& map_data)
 			y_val = MAX_FALL_SPEED;
 		}
 
-		//Left
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+		if (!win)
 		{
-			x_val -= PLAYER_SPEED;
-			this->sprite.move(x_val, 0.f);
-			this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
-		}
-
-		//Right
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-		{
-			x_val += PLAYER_SPEED;
-			this->sprite.move(x_val, 0.f);
-			this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
-		}
-
-		//Jump
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-		{
-			if (on_ground == true)
+			//Left
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 			{
-				sound3.play();
-				y_val = -20;
-				this->sprite.move(0, y_val);
-				on_ground = false;
-
+				x_val -= PLAYER_SPEED;
+				this->sprite.move(x_val, 0.f);
+				this->animState = PLAYER_ANIMATION_STATES::MOVING_LEFT;
 			}
-			this->sprite.move(x_val, 0);
-			this->animState = PLAYER_ANIMATION_STATES::JUMPING;
+
+			//Right
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+			{
+				x_val += PLAYER_SPEED;
+				this->sprite.move(x_val, 0.f);
+				this->animState = PLAYER_ANIMATION_STATES::MOVING_RIGHT;
+			}
+
+			//Jump
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+			{
+				if (on_ground == true)
+				{
+					sound3.play();
+					y_val = -20;
+					this->sprite.move(0, y_val);
+					on_ground = false;
+
+				}
+				this->sprite.move(x_val, 0);
+				this->animState = PLAYER_ANIMATION_STATES::JUMPING;
+			}
 		}
 		collisionMap(map_data);
 		centerEntityOnMap(map_data);
@@ -282,6 +284,14 @@ void Player::collisionMap(Map& map_data)
 			{
 			}
 
+			else if (val1 == 13 || val2 == 13)
+			{
+				this->animState = PLAYER_ANIMATION_STATES::WIN;
+				win = true;
+				x_pos = 0;
+				y_pos = 0;
+			}
+
 			else
 			{
 				if (val1 != 0 || val2 != 0) //Neu o do ko phai so 0
@@ -306,6 +316,14 @@ void Player::collisionMap(Map& map_data)
 
 			else if (val1 == 20 || val2 == 20)
 			{
+			}
+
+			else if (val1 == 13 || val2 == 13)
+			{
+				this->animState = PLAYER_ANIMATION_STATES::WIN;
+				win = true;
+				x_pos = 0;
+				y_pos = 0;
 			}
 
 			else
@@ -356,6 +374,14 @@ void Player::collisionMap(Map& map_data)
 			else if (val1 == 9 || val2 == 9)
 			{
 				y_pos = map_data.max_y;
+			}
+
+			else if (val1 == 13 || val2 == 13)
+			{
+				this->animState = PLAYER_ANIMATION_STATES::WIN;
+				win = true;
+				x_pos = 0;
+				y_pos = 0;
 			}
 
 			else if (val1 == 20 || val2 == 20)
