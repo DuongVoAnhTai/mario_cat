@@ -89,7 +89,7 @@ void Game::initMusic() {
 	sound1.setBuffer(buffer1);
 	sound3.setBuffer(buffer3);
 	sound4.setBuffer(buffer4);
-	sound4.setVolume(30);
+	sound4.setVolume(15);
 	
 }
 
