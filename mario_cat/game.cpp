@@ -75,7 +75,7 @@ void Game::initMusic() {
 		cout << "error!" << endl;
 	}
 
-	if (!buffer3.loadFromFile("./MUSIC_File/thaygiaoba.mp3")) {
+	if (!buffer3.loadFromFile("./MUSIC_File/thaygiaoba6p.mp3")) {
 
 		cout << "error!" << endl;
 	}
