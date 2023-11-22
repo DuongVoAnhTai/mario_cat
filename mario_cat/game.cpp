@@ -78,6 +78,7 @@ void Game::initMusic() {
 	if (!buffer3.loadFromFile("./MUSIC_File/thaygiaoba6p.mp3")) {
 
 		cout << "error!" << endl;
+
 	}
 
 	if (!buffer4.loadFromFile("./MUSIC_File/vitas.mp3")) {
@@ -88,6 +89,7 @@ void Game::initMusic() {
 	sound1.setBuffer(buffer1);
 	sound3.setBuffer(buffer3);
 	sound4.setBuffer(buffer4);
+	sound4.setVolume(30);
 	
 }
 
@@ -100,6 +102,7 @@ void Game::initBackgroundMusic() {
 void Game::initGameOverMusic() {
 	if (!gameOverMusic.openFromFile("./MUSIC_File/gameover.mp3")) {
 		std::cerr << "Error loading game over music!" << std::endl;
+
 	}
 }
 
@@ -350,7 +353,7 @@ void Game::music()
 	if (backgroundMusic.getStatus() != sf::Music::Playing) {
 		backgroundMusic.play();
 	}
-	
+	backgroundMusic.setVolume(15);
 	sound1.play();
 	
 }

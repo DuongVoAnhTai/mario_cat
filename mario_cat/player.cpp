@@ -9,7 +9,7 @@ void Player::initVariables()
 	x_val = 0;
 	y_val = 0;
 
-	x_pos = 0;
+	x_pos = 500*25;
 	y_pos = 0;
 
 	come_back_time = 0;
